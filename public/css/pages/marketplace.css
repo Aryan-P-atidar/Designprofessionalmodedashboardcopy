@@ -1,0 +1,9 @@
+/* Marketplace Page Specific Styles */
+.sidebar-left,
+.sidebar-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Additional marketplace-specific styles can go here */

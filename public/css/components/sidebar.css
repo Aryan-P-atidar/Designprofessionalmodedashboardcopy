@@ -1,0 +1,6 @@
+/* Sidebar Component Styles */
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}

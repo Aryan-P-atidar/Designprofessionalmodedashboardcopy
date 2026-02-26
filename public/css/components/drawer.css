@@ -1,0 +1,129 @@
+/* Profile Drawer Styles */
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-drawer);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.drawer.open {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.drawer.open .drawer-overlay {
+    opacity: 1;
+}
+
+.drawer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--white);
+    box-shadow: var(--shadow-xl);
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer.open .drawer-content {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    padding: var(--space-4);
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.drawer-close-btn {
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    color: var(--gray-600);
+    transition: all var(--transition-fast);
+}
+
+.drawer-close-btn:hover {
+    background-color: var(--gray-100);
+    color: var(--gray-900);
+}
+
+.drawer-profile-section {
+    padding: var(--space-8) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.drawer-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    border: 3px solid var(--purple-600);
+    object-fit: cover;
+}
+
+.drawer-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    text-align: center;
+}
+
+.drawer-nav {
+    flex: 1;
+    padding: var(--space-4) 0;
+}
+
+.drawer-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.drawer-nav-item:hover {
+    background-color: var(--purple-50);
+    color: var(--purple-700);
+}
+
+.drawer-nav-item.active {
+    background-color: var(--purple-100);
+    color: var(--purple-700);
+    border-left: 3px solid var(--purple-600);
+}
+
+@media (max-width: 640px) {
+    .drawer-content {
+        width: 85vw;
+        max-width: 320px;
+    }
+}

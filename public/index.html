@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In-Folio - Professional Networking Platform</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    
+    <!-- Component-specific CSS -->
+    <link rel="stylesheet" href="css/components/drawer.css">
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/post-card.css">
+    <link rel="stylesheet" href="css/components/sidebar.css">
+    <link rel="stylesheet" href="css/components/gig-card.css">
+    <link rel="stylesheet" href="css/components/profile.css">
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="css/pages/marketplace.css">
+    <link rel="stylesheet" href="css/pages/gigs.css">
+    <link rel="stylesheet" href="css/pages/dashboard.css">
+    <link rel="stylesheet" href="css/pages/jobs.css">
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu">
+        <svg class="icon-24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- Profile Drawer -->
+    <div id="profile-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <!-- Drawer content will be rendered by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="app-container" class="app-container">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+
+    <!-- JavaScript Files -->
+    <!-- Utilities -->
+    <script src="js/utils/icons.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    
+    <!-- State Management -->
+    <script src="js/state/store.js"></script>
+    
+    <!-- Components -->
+    <script src="js/components/drawer.js"></script>
+    <script src="js/components/header.js"></script>
+    <script src="js/components/post-card.js"></script>
+    <script src="js/components/create-post.js"></script>
+    <script src="js/components/sidebar-left.js"></script>
+    <script src="js/components/sidebar-right.js"></script>
+    <script src="js/components/gig-card.js"></script>
+    <script src="js/components/filter-sidebar.js"></script>
+    <script src="js/components/profile-view.js"></script>
+    
+    <!-- Pages -->
+    <script src="js/pages/marketplace.js"></script>
+    <script src="js/pages/gigs.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script src="js/pages/jobs.js"></script>
+    <script src="js/pages/profile.js"></script>
+    
+    <!-- Main App -->
+    <script src="js/app.js"></script>
+</body>
+</html>

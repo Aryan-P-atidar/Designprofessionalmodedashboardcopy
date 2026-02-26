@@ -1,0 +1,58 @@
+/* Profile Component Styles */
+.profile-banner {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.profile-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.profile-avatar-section {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-8);
+    margin-top: -80px;
+    position: relative;
+    z-index: 10;
+}
+
+.profile-avatar-large {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-full);
+    border: 5px solid var(--white);
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-tabs-container {
+    display: flex;
+    gap: var(--space-6);
+    border-bottom: 1px solid var(--gray-200);
+    margin-bottom: var(--space-6);
+}
+
+.profile-tab {
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.profile-tab.active {
+    color: var(--purple-700);
+    border-bottom-color: var(--purple-600);
+}
+
+.profile-tab:hover {
+    color: var(--purple-600);
+}
