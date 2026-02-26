@@ -17,6 +17,9 @@ const AppState = {
         dob: '1995-06-15',
         photo: 'https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=200',
         banner: 'https://images.unsplash.com/photo-1665707888808-d44ad6ff690d?w=1200',
+        subtitle: 'Student at Medicaps University',
+        location: 'Indore, Madhya Pradesh, India',
+        badge: 'Medicaps University',
         posts: []
     },
     
@@ -27,6 +30,9 @@ const AppState = {
         dob: '1998-03-22',
         photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
         banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1200',
+        subtitle: 'Student at Medicaps University',
+        location: 'Indore, Madhya Pradesh, India',
+        badge: 'Medicaps University',
         posts: []
     },
     
@@ -368,6 +374,9 @@ function openDrawer() {
     const profile = AppState.getCurrentProfile();
     document.getElementById('drawer-avatar').src = profile.photo;
     document.getElementById('drawer-name').textContent = profile.name;
+    document.getElementById('drawer-subtitle').textContent = profile.subtitle;
+    document.getElementById('drawer-location').textContent = profile.location;
+    document.getElementById('drawer-badge-text').textContent = profile.badge;
 }
 
 function closeDrawer() {

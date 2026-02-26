@@ -100,9 +100,31 @@
                     </svg>
                 </button>
             </div>
-            <div class="p-8 flex flex-col items-center gap-4 border-b border-gray-200">
-                <img id="drawer-avatar" src="" alt="Profile" class="w-20 h-20 rounded-full border-4 border-purple-600 object-cover">
-                <h3 id="drawer-name" class="text-xl font-semibold text-gray-900 text-center"></h3>
+            <div class="p-6 border-b border-gray-200">
+                <!-- Profile Picture -->
+                <button onclick="navigateTo('profile'); closeDrawer();" class="mb-4 hover:opacity-80 transition-opacity">
+                    <img id="drawer-avatar" src="" alt="Profile" class="w-20 h-20 rounded-full object-cover border-2 border-purple-600">
+                </button>
+                
+                <!-- User Info -->
+                <button onclick="navigateTo('profile'); closeDrawer();" class="mb-3 text-left w-full hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-2 mb-1">
+                        <h2 id="drawer-name" class="text-xl font-semibold text-gray-900"></h2>
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <p id="drawer-subtitle" class="text-sm text-gray-600 mb-1"></p>
+                    <p id="drawer-location" class="text-sm text-gray-500"></p>
+                </button>
+                
+                <!-- University Badge -->
+                <div id="drawer-badge" class="flex items-center gap-2 text-sm text-gray-700">
+                    <div class="w-4 h-4 bg-purple-100 rounded flex items-center justify-center">
+                        <div class="w-2 h-2 bg-purple-600 rounded-sm"></div>
+                    </div>
+                    <span class="font-medium" id="drawer-badge-text"></span>
+                </div>
             </div>
             <nav class="py-4">
                 <a href="#" class="drawer-nav-item flex items-center gap-4 px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition" data-page="marketplace">
