@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In-Folio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9333ea;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7e22ce;
+        }
+        
+        /* Backdrop blur support */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+        .backdrop-blur-md {
+            backdrop-filter: blur(12px);
+        }
+        
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Hamburger Menu Button -->
+    <button id="hamburger-btn" class="fixed left-4 top-4 z-[85] bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12" stroke-width="2"></line>
+            <line x1="3" y1="6" x2="21" y2="6" stroke-width="2"></line>
+            <line x1="3" y1="18" x2="21" y2="18" stroke-width="2"></line>
+        </svg>
+    </button>
+
+    <!-- Profile Drawer -->
+    <div id="drawer" class="fixed inset-0 z-[90] hidden">
+        <div id="drawer-overlay" class="absolute inset-0 bg-black/50"></div>
+        <div id="drawer-content" class="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-xl transform -translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b border-gray-200 flex justify-end">
+                <button id="close-drawer" class="p-2 hover:bg-gray-100 rounded">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"></line>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke-width="2"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-8 flex flex-col items-center border-b border-gray-200">
+                <img id="drawer-avatar" src="" alt="Profile" class="w-20 h-20 rounded-full border-3 border-purple-600">
+                <h3 id="drawer-name" class="mt-4 text-xl font-semibold text-gray-900"></h3>
+            </div>
+            <nav class="p-4">
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded transition" data-page="marketplace">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2"></path>
+                    </svg>
+                    <span>Local Marketplace</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded transition" data-page="gigs">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2"></rect>
+                    </svg>
+                    <span>Gigs</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded transition" data-page="dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2"></rect>
+                    </svg>
+                    <span>Professional Dashboard</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded transition" data-page="profile">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"></path>
+                        <circle cx="12" cy="7" r="4" stroke-width="2"></circle>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="app" class="size-full"></div>
+
+    <script src="app-new.js"></script>
+</body>
+</html>
