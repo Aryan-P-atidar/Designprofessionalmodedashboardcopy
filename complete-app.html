@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In-Folio - Professional Networking Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 18px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbced4;
+            transition: 0.3s;
+            border-radius: 999px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 1px;
+            bottom: 1px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #030213;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(14px);
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #9333ea;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7e22ce;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition-property: color, background-color, border-color;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 overflow-x-hidden">
+    <!-- Hamburger Menu Button -->
+    <button id="hamburger-btn" class="fixed left-4 top-4 z-[85] bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="3" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round"></line>
+        </svg>
+    </button>
+
+    <!-- Profile Drawer -->
+    <div id="drawer" class="fixed inset-0 z-[90] pointer-events-none opacity-0 transition-opacity duration-300">
+        <div id="drawer-overlay" class="absolute inset-0 bg-black/50"></div>
+        <div id="drawer-content" class="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b border-gray-200 flex justify-end">
+                <button id="close-drawer" class="p-2 hover:bg-gray-100 rounded-md transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-8 flex flex-col items-center gap-4 border-b border-gray-200">
+                <img id="drawer-avatar" src="" alt="Profile" class="w-20 h-20 rounded-full border-4 border-purple-600 object-cover">
+                <h3 id="drawer-name" class="text-xl font-semibold text-gray-900 text-center"></h3>
+            </div>
+            <nav class="py-4">
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition" data-page="marketplace">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <polyline points="9 22 9 12 15 12 15 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    </svg>
+                    <span class="font-medium">Local Marketplace</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition" data-page="gigs">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="font-medium">Gigs</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition" data-page="dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="font-medium">Professional Dashboard</span>
+                </a>
+                <a href="#" class="drawer-nav-item flex items-center gap-4 px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition" data-page="profile">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <circle cx="12" cy="7" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                    </svg>
+                    <span class="font-medium">Profile</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="app"></div>
+
+    <script src="complete-app.js"></script>
+</body>
+</html>
