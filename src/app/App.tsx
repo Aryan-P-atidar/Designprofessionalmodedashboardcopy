@@ -1,40 +1,198 @@
 import { useState } from 'react';
 import { ProfessionalDashboard } from './components/professional-dashboard';
 import { LocalMarketplace } from './components/local-marketplace';
-import { UserProfile } from './components/user-profile';
+import { ProfessionalProfile } from './components/professional-profile';
+import { MarketProfile } from './components/market-profile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
+import { ProfileDrawer } from './components/profile-drawer';
+import { Menu } from 'lucide-react';
+
+interface Post {
+  id: string;
+  author: string;
+  authorAvatar: string;
+  tag: string;
+  content: string;
+  image?: string;
+  timestamp: string;
+  replies: number;
+  bookmarks: number;
+}
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<'dashboard' | 'marketplace' | 'profile'>('dashboard');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [profileMode, setProfileMode] = useState<'professional' | 'market'>('professional'); // Track which profile to show
+  
+  // Professional Mode posts state
+  const [professionalPosts, setProfessionalPosts] = useState<Post[]>([]);
+  
+  // Market Mode posts state
+  const [marketplacePosts, setMarketplacePosts] = useState<Post[]>([]);
+  
+  // Professional Mode profile state
+  const [profProfilePhoto, setProfProfilePhoto] = useState('https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=200');
+  const [profBannerImage, setProfBannerImage] = useState('https://images.unsplash.com/photo-1665707888808-d44ad6ff690d?w=1200');
+  const [profPersonalInfo, setProfPersonalInfo] = useState({
+    name: 'Sarah Chen',
+    dob: '1995-06-15',
+    email: 'sarah.chen@example.com',
+    phone: '+1 (555) 123-4567'
+  });
+
+  // Market Mode profile state (separate from Professional)
+  const [marketProfilePhoto, setMarketProfilePhoto] = useState('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200');
+  const [marketBannerImage, setMarketBannerImage] = useState('https://images.unsplash.com/photo-1557683316-973673baf926?w=1200');
+  const [marketPersonalInfo, setMarketPersonalInfo] = useState({
+    name: 'Aryan Patidar',
+    dob: '1998-03-22',
+    email: 'aryan.patidar@example.com',
+    phone: '+91 98765 43210'
+  });
+
+  // Determine which profile to use based on the current mode
+  const currentMode = activeScreen === 'marketplace' ? 'market' : 
+                      activeScreen === 'profile' ? profileMode : 
+                      'professional';
+  const profilePhoto = currentMode === 'market' ? marketProfilePhoto : profProfilePhoto;
+  const bannerImage = currentMode === 'market' ? marketBannerImage : profBannerImage;
+  const personalInfo = currentMode === 'market' ? marketPersonalInfo : profPersonalInfo;
+  const setProfilePhoto = currentMode === 'market' ? setMarketProfilePhoto : setProfProfilePhoto;
+  const setBannerImage = currentMode === 'market' ? setMarketBannerImage : setProfBannerImage;
+  const setPersonalInfo = currentMode === 'market' ? setMarketPersonalInfo : setProfPersonalInfo;
+
+  // Handler for toggle switch - switches between Professional and Local modes
+  const handleModeToggle = (isProfessional: boolean) => {
+    if (isProfessional) {
+      setActiveScreen('dashboard');
+    } else {
+      setActiveScreen('marketplace');
+    }
+  };
+
+  // Handler to navigate to user profile
+  const handleNavigateToProfile = () => {
+    // Set the profile mode based on current screen
+    if (activeScreen === 'marketplace') {
+      setProfileMode('market');
+    } else {
+      setProfileMode('professional');
+    }
+    setActiveScreen('profile');
+  };
+
+  // Handler to navigate between screens from drawer
+  const handleNavigate = (screen: 'dashboard' | 'marketplace' | 'profile') => {
+    // When navigating from drawer, set the profile mode based on current context
+    if (screen === 'profile') {
+      if (activeScreen === 'marketplace') {
+        setProfileMode('market');
+      } else {
+        setProfileMode('professional');
+      }
+    }
+    setActiveScreen(screen);
+  };
+
+  // Handler to create a professional post
+  const handleCreateProfessionalPost = (content: string, image?: string) => {
+    const newPost: Post = {
+      id: `prof-${Date.now()}`,
+      author: profPersonalInfo.name,
+      authorAvatar: profProfilePhoto,
+      tag: '#Update',
+      content,
+      image,
+      timestamp: 'Just now',
+      replies: 0,
+      bookmarks: 0
+    };
+    setProfessionalPosts([newPost, ...professionalPosts]);
+  };
+
+  // Handler to create a marketplace post
+  const handleCreateMarketplacePost = (content: string, image?: string) => {
+    const newPost: Post = {
+      id: `market-${Date.now()}`,
+      author: marketPersonalInfo.name,
+      authorAvatar: marketProfilePhoto,
+      tag: '#LocalGig',
+      content,
+      image,
+      timestamp: 'Just now',
+      replies: 0,
+      bookmarks: 0
+    };
+    setMarketplacePosts([newPost, ...marketplacePosts]);
+  };
 
   return (
     <div className="size-full">
-      {/* Screen Selector - Only visible in dev/demo mode */}
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[100]">
-        <Tabs value={activeScreen} onValueChange={(value) => setActiveScreen(value as any)} className="w-auto">
-          <TabsList className="bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg">
-            <TabsTrigger value="dashboard" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              Professional Dashboard
-            </TabsTrigger>
-            <TabsTrigger value="marketplace" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              Local Marketplace
-            </TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              User Profile
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
+      {/* Profile Drawer */}
+      <ProfileDrawer 
+        isOpen={isDrawerOpen} 
+        onClose={() => setIsDrawerOpen(false)}
+        activeScreen={activeScreen}
+        onNavigate={handleNavigate}
+        profilePhoto={profilePhoto}
+        userName={personalInfo.name}
+        profileMode={profileMode}
+      />
+      
+      {/* Drawer Toggle Button */}
+      <button
+        onClick={() => setIsDrawerOpen(true)}
+        className="fixed left-4 top-4 z-[85] bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-colors"
+        aria-label="Open profile menu"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
 
       {/* Screen Content */}
       <div className="size-full">
-        {activeScreen === 'dashboard' && <ProfessionalDashboard />}
-        {activeScreen === 'marketplace' && (
-          <div className="max-w-md mx-auto">
-            <LocalMarketplace />
-          </div>
+        {activeScreen === 'dashboard' && (
+          <ProfessionalDashboard 
+            onModeToggle={handleModeToggle} 
+            onNavigateToProfile={handleNavigateToProfile}
+            posts={professionalPosts}
+            onCreatePost={handleCreateProfessionalPost}
+            userPhoto={profProfilePhoto}
+            userName={profPersonalInfo.name}
+          />
         )}
-        {activeScreen === 'profile' && <UserProfile />}
+        {activeScreen === 'marketplace' && (
+          <LocalMarketplace 
+            onModeToggle={handleModeToggle} 
+            onNavigateToProfile={handleNavigateToProfile}
+            posts={marketplacePosts}
+            onCreatePost={handleCreateMarketplacePost}
+            userPhoto={marketProfilePhoto}
+            userName={marketPersonalInfo.name}
+          />
+        )}
+        {activeScreen === 'profile' && (
+          <>
+            {profileMode === 'professional' ? (
+              <ProfessionalProfile 
+                profilePhoto={profProfilePhoto}
+                setProfilePhoto={setProfProfilePhoto}
+                bannerImage={profBannerImage}
+                setBannerImage={setProfBannerImage}
+                personalInfo={profPersonalInfo}
+                setPersonalInfo={setProfPersonalInfo}
+              />
+            ) : (
+              <MarketProfile 
+                profilePhoto={marketProfilePhoto}
+                setProfilePhoto={setMarketProfilePhoto}
+                bannerImage={marketBannerImage}
+                setBannerImage={setMarketBannerImage}
+                personalInfo={marketPersonalInfo}
+                setPersonalInfo={setMarketPersonalInfo}
+              />
+            )}
+          </>
+        )}
       </div>
     </div>
   );

@@ -2,7 +2,8 @@ import { Badge } from './ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Card, CardContent } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { MessageCircle, Send } from 'lucide-react';
+import { MessageCircle, Send, Camera, Upload, X, Edit, Image } from 'lucide-react';
+import { useState } from 'react';
 
 interface Project {
   id: string;
@@ -18,6 +19,22 @@ interface ChatMessage {
   avatar: string;
   message: string;
   timestamp: string;
+}
+
+interface PersonalInfo {
+  name: string;
+  dob: string;
+  email: string;
+  phone: string;
+}
+
+interface ProfessionalProfileProps {
+  profilePhoto: string;
+  setProfilePhoto: (photo: string) => void;
+  bannerImage: string;
+  setBannerImage: (image: string) => void;
+  personalInfo: PersonalInfo;
+  setPersonalInfo: (info: PersonalInfo) => void;
 }
 
 const mockProjects: Project[] = [
@@ -118,30 +135,242 @@ const platformLogos = {
   )
 };
 
-export function UserProfile() {
+export function ProfessionalProfile({ profilePhoto, setProfilePhoto, bannerImage, setBannerImage, personalInfo, setPersonalInfo }: ProfessionalProfileProps) {
+  const [isEditingPhoto, setIsEditingPhoto] = useState(false);
+  const [isEditingPersonalInfo, setIsEditingPersonalInfo] = useState(false);
+  
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePhoto(reader.result as string);
+        setIsEditingPhoto(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBannerUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBannerImage(reader.result as string);
+        setIsEditingPhoto(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePersonalInfoChange = (field: string, value: string) => {
+    setPersonalInfo({ ...personalInfo, [field]: value });
+  };
+
+  const handleSavePersonalInfo = () => {
+    setIsEditingPersonalInfo(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header Banner */}
-      <div className="relative">
+      <div className="relative group">
         <ImageWithFallback
-          src="https://images.unsplash.com/photo-1665707888808-d44ad6ff690d?w=1200"
+          src={bannerImage}
           alt="Profile banner"
           className="w-full h-48 object-cover"
         />
+        {/* Edit Banner Button */}
+        <button className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+          <label 
+            htmlFor="banner-upload"
+            className="flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white rounded-lg cursor-pointer shadow-lg transition-colors"
+          >
+            <Image className="w-4 h-4 text-gray-700" />
+            <span className="text-sm font-semibold text-gray-900">Edit Banner</span>
+            <input
+              type="file"
+              id="banner-upload"
+              accept="image/*"
+              className="hidden"
+              onChange={handleBannerUpload}
+            />
+          </label>
+        </button>
         <div className="absolute -bottom-16 left-8">
-          <Avatar className="w-32 h-32 border-4 border-white shadow-lg">
-            <AvatarImage src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=200" />
-            <AvatarFallback>SC</AvatarFallback>
-          </Avatar>
+          <button 
+            onClick={() => setIsEditingPhoto(true)}
+            className="relative group"
+          >
+            <Avatar className="w-32 h-32 border-4 border-white shadow-lg">
+              <AvatarImage src={profilePhoto} />
+              <AvatarFallback>SC</AvatarFallback>
+            </Avatar>
+            <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <Camera className="w-8 h-8 text-white" />
+            </div>
+          </button>
         </div>
       </div>
+
+      {/* Edit Photo Modal */}
+      {isEditingPhoto && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/60 z-[100]"
+            onClick={() => setIsEditingPhoto(false)}
+          />
+          
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] bg-white rounded-lg shadow-2xl p-6 w-96">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-gray-900">Profile Photo</h3>
+              <button 
+                onClick={() => setIsEditingPhoto(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+            
+            <div className="mb-6">
+              <Avatar className="w-32 h-32 mx-auto border-4 border-purple-600 shadow-lg mb-4">
+                <AvatarImage src={profilePhoto} />
+                <AvatarFallback>SC</AvatarFallback>
+              </Avatar>
+            </div>
+            
+            <div className="space-y-3">
+              <label 
+                htmlFor="photo-upload"
+                className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+              >
+                <Upload className="w-5 h-5 text-purple-600" />
+                <span className="font-semibold text-gray-900">Upload Photo</span>
+                <input
+                  type="file"
+                  id="photo-upload"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handlePhotoUpload}
+                />
+              </label>
+              
+              <button className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 w-full transition-colors">
+                <Camera className="w-5 h-5 text-purple-600" />
+                <span className="font-semibold text-gray-900">Take Photo</span>
+              </button>
+              
+              <button 
+                onClick={() => {
+                  setIsEditingPhoto(false);
+                  setIsEditingPersonalInfo(true);
+                }}
+                className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 w-full transition-colors"
+              >
+                <Edit className="w-5 h-5 text-purple-600" />
+                <span className="font-semibold text-gray-900">Edit Personal Info</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Edit Personal Info Modal */}
+      {isEditingPersonalInfo && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/60 z-[100]"
+            onClick={() => setIsEditingPersonalInfo(false)}
+          />
+          
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] bg-white rounded-lg shadow-2xl p-6 w-[480px] max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-gray-900">Edit Personal Information</h3>
+              <button 
+                onClick={() => setIsEditingPersonalInfo(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  value={personalInfo.name}
+                  onChange={(e) => handlePersonalInfoChange('name', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-colors"
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  value={personalInfo.dob}
+                  onChange={(e) => handlePersonalInfoChange('dob', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={personalInfo.email}
+                  onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-colors"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  value={personalInfo.phone}
+                  onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-colors"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setIsEditingPersonalInfo(false)}
+                className="flex-1 px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 font-semibold text-gray-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSavePersonalInfo}
+                className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Profile Info */}
       <div className="pt-20 px-8 pb-6 bg-white border-b border-gray-200">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-semibold mb-2">Sarah Chen</h1>
+              <h1 className="text-3xl font-semibold mb-2">{personalInfo.name}</h1>
               <Badge className="bg-purple-100 text-purple-700 border-purple-200 gap-1.5 mb-4">
                 <span className="w-2 h-2 bg-purple-600 rounded-full"></span>
                 AI Verified: Frontend Developer
@@ -169,11 +398,10 @@ export function UserProfile() {
       {/* Main Content */}
       <div className="max-w-[1400px] mx-auto px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
-          {/* Proof of Work Section - Main Content */}
+          {/* Proof of Work Section */}
           <div className="col-span-9">
             <h2 className="text-2xl font-semibold mb-6">Proof of Work</h2>
             
-            {/* Masonry Grid */}
             <div className="grid grid-cols-3 gap-4 auto-rows-auto">
               {mockProjects.map((project, index) => (
                 <Card 
@@ -214,7 +442,7 @@ export function UserProfile() {
             </div>
           </div>
 
-          {/* Sidebar - Skills & Stats */}
+          {/* Sidebar */}
           <div className="col-span-3">
             <Card className="bg-white border-gray-200 mb-6 shadow-sm">
               <CardContent className="p-6">
@@ -272,7 +500,6 @@ export function UserProfile() {
       <div className="fixed bottom-6 right-6 w-80 z-50">
         <Card className="bg-white border-gray-200 shadow-2xl">
           <CardContent className="p-0">
-            {/* Chat Header */}
             <div className="bg-purple-600 px-4 py-3 flex items-center justify-between rounded-t-lg">
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-5 h-5 text-white" />
@@ -283,7 +510,6 @@ export function UserProfile() {
               </div>
             </div>
 
-            {/* Chat Messages */}
             <div className="p-4 space-y-3 max-h-64 overflow-y-auto bg-gray-50">
               {chatMessages.map((msg) => (
                 <div key={msg.id} className="flex gap-2">
@@ -302,7 +528,6 @@ export function UserProfile() {
               ))}
             </div>
 
-            {/* Chat Input */}
             <div className="p-3 border-t border-gray-200 bg-white">
               <div className="flex items-center gap-2">
                 <input

@@ -1,10 +1,13 @@
-import { Home, Briefcase, MessageSquare, Bell, Search, Bookmark, MessageCircle } from 'lucide-react';
+import { Home, Briefcase, MessageSquare, Bell, Search, Bookmark, MessageCircle, PlusCircle } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Card, CardContent } from './ui/card';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ProfessionalCreatePost } from './professional-create-post';
+import { useState } from 'react';
+import logoImage from 'figma:asset/b85553e46dc3e61311776017b919aefe2fcf1a19.png';
 
 interface Post {
   id: string;
@@ -93,14 +96,41 @@ const sideQuests: SideQuest[] = [
   }
 ];
 
-export function ProfessionalDashboard() {
+interface ProfessionalDashboardProps {
+  onModeToggle: (isProfessional: boolean) => void;
+  onNavigateToProfile: () => void;
+  posts: Post[];
+  onCreatePost: (content: string, image?: string) => void;
+  userPhoto: string;
+  userName: string;
+}
+
+export function ProfessionalDashboard({ onModeToggle, onNavigateToProfile, posts, onCreatePost, userPhoto, userName }: ProfessionalDashboardProps) {
+  const [isCreatingPost, setIsCreatingPost] = useState(false);
+
+  const handlePostCreate = (content: string, image?: string) => {
+    onCreatePost(content, image);
+  };
+
+  // Combine user's posts with mock posts
+  const allPosts = [...posts, ...mockPosts];
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      {/* Create Post Dialog */}
+      <ProfessionalCreatePost 
+        isOpen={isCreatingPost}
+        onClose={() => setIsCreatingPost(false)}
+        onPost={handlePostCreate}
+        userPhoto={userPhoto}
+        userName={userName}
+      />
+
       {/* Top Navigation */}
       <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
         <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
           {/* Logo */}
-          <div className="text-xl font-semibold text-purple-600">ProNet</div>
+          <img src={logoImage} alt="In-Folio" className="h-10 w-10 rounded-full object-cover ml-16" />
           
           {/* Search Bar */}
           <div className="flex-1 max-w-xl">
@@ -128,6 +158,13 @@ export function ProfessionalDashboard() {
               <MessageSquare className="w-6 h-6" />
               <span className="text-xs">Messages</span>
             </button>
+            <button 
+              onClick={() => setIsCreatingPost(true)}
+              className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors"
+            >
+              <PlusCircle className="w-6 h-6" />
+              <span className="text-xs">Post</span>
+            </button>
             <button className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors relative">
               <Bell className="w-6 h-6" />
               <span className="text-xs">Notifications</span>
@@ -137,8 +174,8 @@ export function ProfessionalDashboard() {
 
           {/* Toggle Switch */}
           <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
-            <Label htmlFor="mode-toggle" className="text-sm text-gray-500">Local</Label>
-            <Switch id="mode-toggle" checked />
+            <Label htmlFor="mode-toggle" className="text-sm text-gray-500 cursor-pointer" onClick={() => onModeToggle(false)}>Market</Label>
+            <Switch id="mode-toggle" checked onCheckedChange={(checked) => onModeToggle(checked)} />
             <Label htmlFor="mode-toggle" className="text-sm text-purple-600">Professional</Label>
           </div>
         </div>
@@ -146,43 +183,10 @@ export function ProfessionalDashboard() {
 
       {/* Main Content - 3 Column Layout */}
       <div className="max-w-[1600px] mx-auto px-6 py-8 grid grid-cols-12 gap-6">
-        {/* Left Column - User Profile */}
-        <aside className="col-span-3">
-          <Card className="bg-white border-gray-200 sticky top-24 shadow-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center">
-                <Avatar className="w-20 h-20 mb-4">
-                  <AvatarImage src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" />
-                  <AvatarFallback>SC</AvatarFallback>
-                </Avatar>
-                <h3 className="font-semibold mb-1">Sarah Chen</h3>
-                <Badge className="bg-purple-100 text-purple-700 border-purple-200 gap-1.5">
-                  <span className="w-2 h-2 bg-purple-600 rounded-full"></span>
-                  AI Skill Verified
-                </Badge>
-                <div className="w-full mt-6 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="font-semibold text-lg text-purple-600">245</div>
-                    <div className="text-xs text-gray-500">Connections</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-lg text-purple-600">89</div>
-                    <div className="text-xs text-gray-500">Projects</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-lg text-purple-600">12</div>
-                    <div className="text-xs text-gray-500">Circles</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </aside>
-
         {/* Center Column - Feed */}
-        <main className="col-span-6">
+        <main className="col-span-8">
           <div className="space-y-4">
-            {mockPosts.map((post) => (
+            {allPosts.map((post) => (
               <Card key={post.id} className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="p-6">
                   {/* Post Header */}
@@ -234,7 +238,7 @@ export function ProfessionalDashboard() {
         </main>
 
         {/* Right Column - Side Quest Board */}
-        <aside className="col-span-3">
+        <aside className="col-span-4">
           <div className="sticky top-24">
             <h2 className="text-lg font-semibold mb-4 px-2 text-gray-900">Side-Quest Board</h2>
             <div className="space-y-3">
