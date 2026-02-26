@@ -103,9 +103,10 @@ interface ProfessionalDashboardProps {
   onCreatePost: (content: string, image?: string) => void;
   userPhoto: string;
   userName: string;
+  onNavigateToJobs?: () => void;
 }
 
-export function ProfessionalDashboard({ onModeToggle, onNavigateToProfile, posts, onCreatePost, userPhoto, userName }: ProfessionalDashboardProps) {
+export function ProfessionalDashboard({ onModeToggle, onNavigateToProfile, posts, onCreatePost, userPhoto, userName, onNavigateToJobs }: ProfessionalDashboardProps) {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
 
   const handlePostCreate = (content: string, image?: string) => {
@@ -150,7 +151,10 @@ export function ProfessionalDashboard({ onModeToggle, onNavigateToProfile, posts
               <Home className="w-6 h-6" />
               <span className="text-xs">Home</span>
             </button>
-            <button className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+            <button 
+              onClick={onNavigateToJobs}
+              className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors"
+            >
               <Briefcase className="w-6 h-6" />
               <span className="text-xs">Jobs</span>
             </button>

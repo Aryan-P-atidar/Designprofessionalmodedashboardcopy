@@ -3,9 +3,19 @@ import { ProfessionalDashboard } from './components/professional-dashboard';
 import { LocalMarketplace } from './components/local-marketplace';
 import { ProfessionalProfile } from './components/professional-profile';
 import { MarketProfile } from './components/market-profile';
+import { JobsDashboard } from './components/jobs-dashboard';
+import { GigsMarketplace } from './components/gigs-marketplace';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { ProfileDrawer } from './components/profile-drawer';
 import { Menu } from 'lucide-react';
+
+interface Comment {
+  id: string;
+  author: string;
+  authorAvatar: string;
+  content: string;
+  timestamp: string;
+}
 
 interface Post {
   id: string;
@@ -17,10 +27,13 @@ interface Post {
   timestamp: string;
   replies: number;
   bookmarks: number;
+  likes: number;
+  isLiked: boolean;
+  comments: Comment[];
 }
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState<'dashboard' | 'marketplace' | 'profile'>('dashboard');
+  const [activeScreen, setActiveScreen] = useState<'dashboard' | 'marketplace' | 'profile' | 'jobs' | 'gigs'>('marketplace');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [profileMode, setProfileMode] = useState<'professional' | 'market'>('professional'); // Track which profile to show
   
@@ -82,7 +95,7 @@ export default function App() {
   };
 
   // Handler to navigate between screens from drawer
-  const handleNavigate = (screen: 'dashboard' | 'marketplace' | 'profile') => {
+  const handleNavigate = (screen: 'dashboard' | 'marketplace' | 'profile' | 'jobs' | 'gigs') => {
     // When navigating from drawer, set the profile mode based on current context
     if (screen === 'profile') {
       if (activeScreen === 'marketplace') {
@@ -105,7 +118,10 @@ export default function App() {
       image,
       timestamp: 'Just now',
       replies: 0,
-      bookmarks: 0
+      bookmarks: 0,
+      likes: 0,
+      isLiked: false,
+      comments: []
     };
     setProfessionalPosts([newPost, ...professionalPosts]);
   };
@@ -121,7 +137,10 @@ export default function App() {
       image,
       timestamp: 'Just now',
       replies: 0,
-      bookmarks: 0
+      bookmarks: 0,
+      likes: 0,
+      isLiked: false,
+      comments: []
     };
     setMarketplacePosts([newPost, ...marketplacePosts]);
   };
@@ -158,6 +177,7 @@ export default function App() {
             onCreatePost={handleCreateProfessionalPost}
             userPhoto={profProfilePhoto}
             userName={profPersonalInfo.name}
+            onNavigateToJobs={() => setActiveScreen('jobs')}
           />
         )}
         {activeScreen === 'marketplace' && (
@@ -168,6 +188,7 @@ export default function App() {
             onCreatePost={handleCreateMarketplacePost}
             userPhoto={marketProfilePhoto}
             userName={marketPersonalInfo.name}
+            onNavigateToGigs={() => setActiveScreen('gigs')}
           />
         )}
         {activeScreen === 'profile' && (
@@ -192,6 +213,18 @@ export default function App() {
               />
             )}
           </>
+        )}
+        {activeScreen === 'jobs' && (
+          <JobsDashboard 
+            onModeToggle={handleModeToggle}
+            onNavigateBack={() => setActiveScreen('dashboard')}
+          />
+        )}
+        {activeScreen === 'gigs' && (
+          <GigsMarketplace 
+            onModeToggle={handleModeToggle}
+            onNavigateBack={() => setActiveScreen('marketplace')}
+          />
         )}
       </div>
     </div>

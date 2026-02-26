@@ -1,4 +1,4 @@
-import { Home, Briefcase, MessageSquare, Bell, Search, Bookmark, MessageCircle, PlusCircle } from 'lucide-react';
+import { Home, Briefcase, MessageSquare, Bell, Search, Bookmark, MessageCircle, PlusCircle, Heart, Send } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Card, CardContent } from './ui/card';
@@ -8,6 +8,14 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { MarketplaceCreatePost } from './marketplace-create-post';
 import { useState } from 'react';
 import logoImage from 'figma:asset/b85553e46dc3e61311776017b919aefe2fcf1a19.png';
+
+interface Comment {
+  id: string;
+  author: string;
+  authorAvatar: string;
+  content: string;
+  timestamp: string;
+}
 
 interface Post {
   id: string;
@@ -19,6 +27,9 @@ interface Post {
   timestamp: string;
   replies: number;
   bookmarks: number;
+  likes: number;
+  isLiked: boolean;
+  comments: Comment[];
 }
 
 interface SideQuest {
@@ -39,7 +50,18 @@ const mockPosts: Post[] = [
     image: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600',
     timestamp: '1h ago',
     replies: 8,
-    bookmarks: 15
+    bookmarks: 15,
+    likes: 3,
+    isLiked: false,
+    comments: [
+      {
+        id: '1',
+        author: 'Priya Sharma',
+        authorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
+        content: 'Interested! Can you provide more details?',
+        timestamp: '30 minutes ago'
+      }
+    ]
   },
   {
     id: '2',
@@ -50,7 +72,18 @@ const mockPosts: Post[] = [
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600',
     timestamp: '3h ago',
     replies: 12,
-    bookmarks: 28
+    bookmarks: 28,
+    likes: 5,
+    isLiked: false,
+    comments: [
+      {
+        id: '2',
+        author: 'Amit Verma',
+        authorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100',
+        content: 'I can help with that. What are the requirements?',
+        timestamp: '2 hours ago'
+      }
+    ]
   },
   {
     id: '3',
@@ -61,7 +94,18 @@ const mockPosts: Post[] = [
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600',
     timestamp: '5h ago',
     replies: 6,
-    bookmarks: 42
+    bookmarks: 42,
+    likes: 2,
+    isLiked: false,
+    comments: [
+      {
+        id: '3',
+        author: 'Rajesh Kumar',
+        authorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+        content: 'I can do this. How do I proceed?',
+        timestamp: '4 hours ago'
+      }
+    ]
   }
 ];
 
@@ -103,17 +147,79 @@ interface LocalMarketplaceProps {
   onCreatePost: (content: string, image?: string) => void;
   userPhoto: string;
   userName: string;
+  onNavigateToGigs?: () => void;
 }
 
-export function LocalMarketplace({ onModeToggle, onNavigateToProfile, posts, onCreatePost, userPhoto, userName }: LocalMarketplaceProps) {
+export function LocalMarketplace({ onModeToggle, onNavigateToProfile, posts, onCreatePost, userPhoto, userName, onNavigateToGigs }: LocalMarketplaceProps) {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
+  const [allPosts, setAllPosts] = useState<Post[]>([...posts, ...mockPosts]);
+  const [showComments, setShowComments] = useState<{ [key: string]: boolean }>({});
+  const [commentInputs, setCommentInputs] = useState<{ [key: string]: string }>({});
 
   const handlePostCreate = (content: string, image?: string) => {
     onCreatePost(content, image);
   };
 
-  // Combine user's posts with mock posts
-  const allPosts = [...posts, ...mockPosts];
+  // Toggle like on a post
+  const handleLike = (postId: string) => {
+    setAllPosts(allPosts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          isLiked: !post.isLiked,
+          likes: post.isLiked ? post.likes - 1 : post.likes + 1
+        };
+      }
+      return post;
+    }));
+  };
+
+  // Toggle comments section visibility
+  const toggleComments = (postId: string) => {
+    setShowComments(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+
+  // Handle comment input change
+  const handleCommentChange = (postId: string, value: string) => {
+    setCommentInputs(prev => ({
+      ...prev,
+      [postId]: value
+    }));
+  };
+
+  // Add a comment to a post
+  const handleAddComment = (postId: string) => {
+    const commentText = commentInputs[postId]?.trim();
+    if (!commentText) return;
+
+    const newComment: Comment = {
+      id: `comment-${Date.now()}`,
+      author: userName,
+      authorAvatar: userPhoto,
+      content: commentText,
+      timestamp: 'Just now'
+    };
+
+    setAllPosts(allPosts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          comments: [...post.comments, newComment],
+          replies: post.replies + 1
+        };
+      }
+      return post;
+    }));
+
+    // Clear the input
+    setCommentInputs(prev => ({
+      ...prev,
+      [postId]: ''
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -150,7 +256,10 @@ export function LocalMarketplace({ onModeToggle, onNavigateToProfile, posts, onC
               <Home className="w-6 h-6" />
               <span className="text-xs">Home</span>
             </button>
-            <button className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+            <button 
+              onClick={onNavigateToGigs}
+              className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors"
+            >
               <Briefcase className="w-6 h-6" />
               <span className="text-xs">Gigs</span>
             </button>
@@ -222,7 +331,10 @@ export function LocalMarketplace({ onModeToggle, onNavigateToProfile, posts, onC
 
                   {/* Post Actions */}
                   <div className="flex items-center gap-6 pt-4 border-t border-gray-200">
-                    <button className="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
+                    <button 
+                      onClick={() => toggleComments(post.id)}
+                      className="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors"
+                    >
                       <MessageCircle className="w-5 h-5" />
                       <span className="text-sm">{post.replies} Replies</span>
                     </button>
@@ -230,7 +342,68 @@ export function LocalMarketplace({ onModeToggle, onNavigateToProfile, posts, onC
                       <Bookmark className="w-5 h-5" />
                       <span className="text-sm">{post.bookmarks} Bookmarks</span>
                     </button>
+                    <button 
+                      onClick={() => handleLike(post.id)}
+                      className={`flex items-center gap-2 transition-colors ${
+                        post.isLiked ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+                      }`}
+                    >
+                      <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-red-500' : ''}`} />
+                      <span className="text-sm">{post.likes} Likes</span>
+                    </button>
                   </div>
+
+                  {/* Comments Section */}
+                  {showComments[post.id] && (
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      {post.comments.length > 0 && (
+                        <div className="space-y-3 mb-4">
+                          {post.comments.map((comment) => (
+                            <div key={comment.id} className="flex items-start gap-3 bg-gray-50 p-3 rounded-lg">
+                              <Avatar className="w-8 h-8">
+                                <AvatarImage src={comment.authorAvatar} />
+                                <AvatarFallback>{comment.author[0]}</AvatarFallback>
+                              </Avatar>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-semibold text-sm text-gray-900">{comment.author}</span>
+                                  <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                                </div>
+                                <p className="text-sm text-gray-700 mt-1">{comment.content}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Add Comment Input */}
+                      <div className="flex items-center gap-2">
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage src={userPhoto} />
+                          <AvatarFallback>{userName[0]}</AvatarFallback>
+                        </Avatar>
+                        <input
+                          type="text"
+                          placeholder="Write a comment..."
+                          value={commentInputs[post.id] || ''}
+                          onChange={(e) => handleCommentChange(post.id, e.target.value)}
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              handleAddComment(post.id);
+                            }
+                          }}
+                          className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                        />
+                        <button 
+                          onClick={() => handleAddComment(post.id)}
+                          className="text-purple-600 hover:text-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={!commentInputs[post.id]?.trim()}
+                        >
+                          <Send className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
