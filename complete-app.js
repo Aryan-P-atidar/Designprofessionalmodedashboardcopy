@@ -4,6 +4,11 @@
 const AppState = {
     currentPage: 'marketplace',
     profileMode: 'market',
+    showCreatePost: false,
+    showComments: {},
+    commentInputs: {},
+    postImagePreview: null,
+    postContent: '',
     
     professional: {
         name: 'Sarah Chen',
@@ -26,12 +31,20 @@ const AppState = {
     },
     
     getCurrentProfile() {
-        if (this.currentPage === 'marketplace' || this.currentPage === 'gigs') {
+        if (this.currentPage === 'marketplace' || this.currentPage === 'gigs' || this.currentPage === 'jobs') {
             return this.market;
         } else if (this.currentPage === 'profile') {
             return this.profileMode === 'market' ? this.market : this.professional;
         } else {
             return this.professional;
+        }
+    },
+    
+    getAllPosts() {
+        if (this.currentPage === 'marketplace' || this.currentPage === 'jobs') {
+            return [...this.market.posts, ...marketMockPosts];
+        } else {
+            return [...this.professional.posts, ...professionalMockPosts];
         }
     }
 };
@@ -41,7 +54,7 @@ const AppState = {
 // ============================================
 const marketMockPosts = [
     {
-        id: '1',
+        id: 'market1',
         author: 'Rajesh Kumar',
         authorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
         tag: '#Hiring',
@@ -53,7 +66,7 @@ const marketMockPosts = [
         likes: 3,
         isLiked: false,
         comments: [{
-            id: '1',
+            id: 'c1',
             author: 'Priya Sharma',
             authorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
             content: 'Interested! Can you provide more details?',
@@ -61,7 +74,7 @@ const marketMockPosts = [
         }]
     },
     {
-        id: '2',
+        id: 'market2',
         author: 'Priya Sharma',
         authorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
         tag: '#LocalBusiness',
@@ -75,7 +88,7 @@ const marketMockPosts = [
         comments: []
     },
     {
-        id: '3',
+        id: 'market3',
         author: 'Amit Verma',
         authorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100',
         tag: '#QuickGig',
@@ -92,7 +105,7 @@ const marketMockPosts = [
 
 const professionalMockPosts = [
     {
-        id: '1',
+        id: 'prof1',
         author: 'Sarah Chen',
         authorAvatar: 'https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100',
         tag: '#Hiring',
@@ -106,7 +119,7 @@ const professionalMockPosts = [
         comments: []
     },
     {
-        id: '2',
+        id: 'prof2',
         author: 'Alex Kumar',
         authorAvatar: 'https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?w=100',
         tag: '#TechUpdate',
@@ -120,7 +133,7 @@ const professionalMockPosts = [
         comments: []
     },
     {
-        id: '3',
+        id: 'prof3',
         author: 'Maya Patel',
         authorAvatar: 'https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100',
         tag: '#ProjectShowcase',
@@ -153,8 +166,121 @@ const mockGigs = [
     { id: '1', title: 'Delivery Driver Needed', employer: 'QuickBite Restaurant', employerAvatar: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=100', location: 'Raipur, Sector 15', salary: '₹300-500/day', type: 'Part-time', description: 'Need reliable delivery driver with own bike. Flexible hours, daily payment. Must know local area well.', postedTime: '2h ago', tags: ['Delivery', 'Bike Required'], applicants: 12 },
     { id: '2', title: 'Sales Associate - Fashion Store', employer: 'Style Hub Boutique', employerAvatar: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100', location: 'City Center Mall', salary: '₹12,000-15,000/month', type: 'Full-time', description: 'Looking for enthusiastic sales associate for our fashion boutique. Good communication skills required.', postedTime: '5h ago', tags: ['Retail', 'Customer Service'], applicants: 25 },
     { id: '3', title: 'Barista - Coffee Shop', employer: 'Brew & Beans Cafe', employerAvatar: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=100', location: 'Marine Drive', salary: '₹10,000-14,000/month', type: 'Full-time', description: 'Experienced barista needed for busy cafe. Knowledge of espresso machines required. Training provided.', postedTime: '1d ago', tags: ['Hospitality', 'Cafe'], applicants: 18 },
-    { id: '4', title: 'Warehouse Associate', employer: 'Metro Logistics', employerAvatar: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=100', location: 'Industrial Area', salary: '₹13,000-16,000/month', type: 'Full-time', description: 'Warehouse worker needed for loading/unloading. Physical work. Good pay and benefits.', postedTime: '3d ago', tags: ['Logistics', 'Physical Work'], applicants: 32 }
+    { id: '4', title: 'Warehouse Associate', employer: 'Metro Logistics', employerAvatar: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=100', location: 'Industrial Area', salary: '₹13,000-16,000/month', type: 'Full-time', description: 'Warehouse worker needed for loading/unloading. Physical work. Good pay and benefits.', postedTime: '3d ago', tags: ['Logistics', 'Physical Work'], applicants: 32 },
+    { id: '5', title: 'Line Cook Required', employer: 'Spice Garden Restaurant', employerAvatar: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=100', location: 'Downtown', salary: '₹15,000-20,000/month', type: 'Full-time', description: 'Experienced line cook for busy restaurant kitchen. Must know North Indian cuisine. Immediate joining.', postedTime: '4d ago', tags: ['Food Service', 'Cooking'], applicants: 15 }
 ];
+
+const mockJobs = [
+    { id: 'j1', title: 'Store Manager', company: 'Reliance Fresh', companyLogo: 'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=100', location: 'Raipur', salary: '₹25,000-35,000/month', type: 'Full-time', description: 'Looking for an experienced store manager to oversee daily operations. Must have retail experience and leadership skills.', postedTime: '1d ago', tags: ['Management', 'Retail'], applicants: 45 },
+    { id: 'j2', title: 'Customer Service Executive', company: 'HDFC Bank', companyLogo: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=100', location: 'City Center', salary: '₹18,000-22,000/month', type: 'Full-time', description: 'Join our customer service team. Handle customer queries, banking operations, and account management.', postedTime: '2d ago', tags: ['Banking', 'Customer Service'], applicants: 67 },
+    { id: 'j3', title: 'Electrician', company: 'BuildRight Construction', companyLogo: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=100', location: 'Multiple Sites', salary: '₹20,000-28,000/month', type: 'Full-time', description: 'Skilled electrician needed for commercial and residential projects. ITI certified preferred.', postedTime: '3d ago', tags: ['Skilled Trade', 'Construction'], applicants: 28 },
+    { id: 'j4', title: 'Data Entry Operator', company: 'Tech Solutions Pvt Ltd', companyLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100', location: 'Work from Home', salary: '₹12,000-15,000/month', type: 'Part-time', description: 'Work from home opportunity. Fast typing speed required. Flexible hours.', postedTime: '1w ago', tags: ['Remote', 'Data Entry'], applicants: 120 }
+];
+
+// ============================================
+// POST ACTIONS
+// ============================================
+window.toggleLike = function(postId) {
+    const allPosts = AppState.getAllPosts();
+    const post = allPosts.find(p => p.id === postId);
+    if (post) {
+        post.isLiked = !post.isLiked;
+        post.likes = post.isLiked ? post.likes + 1 : post.likes - 1;
+        render();
+    }
+};
+
+window.toggleComments = function(postId) {
+    AppState.showComments[postId] = !AppState.showComments[postId];
+    render();
+};
+
+window.addComment = function(postId) {
+    const commentText = AppState.commentInputs[postId];
+    if (!commentText || !commentText.trim()) return;
+    
+    const allPosts = AppState.getAllPosts();
+    const post = allPosts.find(p => p.id === postId);
+    if (post) {
+        const profile = AppState.getCurrentProfile();
+        const newComment = {
+            id: 'c' + Date.now(),
+            author: profile.name,
+            authorAvatar: profile.photo,
+            content: commentText.trim(),
+            timestamp: 'Just now'
+        };
+        post.comments.push(newComment);
+        post.replies++;
+        AppState.commentInputs[postId] = '';
+        render();
+    }
+};
+
+window.updateCommentInput = function(postId, value) {
+    AppState.commentInputs[postId] = value;
+};
+
+window.openCreatePost = function() {
+    AppState.showCreatePost = true;
+    render();
+};
+
+window.closeCreatePost = function() {
+    AppState.showCreatePost = false;
+    AppState.postContent = '';
+    AppState.postImagePreview = null;
+    render();
+};
+
+window.updatePostContent = function(value) {
+    AppState.postContent = value;
+};
+
+window.handleImageUpload = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            AppState.postImagePreview = e.target.result;
+            render();
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+window.removeImage = function() {
+    AppState.postImagePreview = null;
+    render();
+};
+
+window.createPost = function() {
+    if (!AppState.postContent.trim()) return;
+    
+    const profile = AppState.getCurrentProfile();
+    const newPost = {
+        id: 'user' + Date.now(),
+        author: profile.name,
+        authorAvatar: profile.photo,
+        tag: '#Update',
+        content: AppState.postContent.trim(),
+        image: AppState.postImagePreview,
+        timestamp: 'Just now',
+        replies: 0,
+        bookmarks: 0,
+        likes: 0,
+        isLiked: false,
+        comments: []
+    };
+    
+    if (AppState.currentPage === 'marketplace') {
+        AppState.market.posts.unshift(newPost);
+    } else {
+        AppState.professional.posts.unshift(newPost);
+    }
+    
+    closeCreatePost();
+};
 
 // ============================================
 // DRAWER FUNCTIONS
@@ -186,7 +312,7 @@ function closeDrawer() {
 // ============================================
 function navigateTo(page) {
     if (page === 'profile') {
-        if (AppState.currentPage === 'marketplace' || AppState.currentPage === 'gigs') {
+        if (AppState.currentPage === 'marketplace' || AppState.currentPage === 'gigs' || AppState.currentPage === 'jobs') {
             AppState.profileMode = 'market';
         } else {
             AppState.profileMode = 'professional';
@@ -196,12 +322,178 @@ function navigateTo(page) {
     render();
 }
 
+window.navigateTo = navigateTo;
+
 // ============================================
 // RENDER FUNCTIONS
 // ============================================
+function renderCreatePostModal() {
+    if (!AppState.showCreatePost) return '';
+    
+    const profile = AppState.getCurrentProfile();
+    return `
+        <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm" onclick="if(event.target === this) closeCreatePost()">
+            <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                    <h3 class="text-xl font-semibold text-gray-900">Create Post</h3>
+                    <button onclick="closeCreatePost()" class="p-2 hover:bg-gray-100 rounded-full transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                            <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start gap-3 mb-4">
+                        <img src="${profile.photo}" alt="${profile.name}" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-gray-900">${profile.name}</div>
+                            <div class="text-sm text-gray-500">Public</div>
+                        </div>
+                    </div>
+                    <textarea 
+                        id="post-content-input"
+                        placeholder="What's on your mind?"
+                        class="w-full border-0 focus:outline-none text-gray-900 text-lg resize-none mb-4"
+                        rows="6"
+                        oninput="updatePostContent(this.value)"
+                    >${AppState.postContent}</textarea>
+                    
+                    ${AppState.postImagePreview ? `
+                        <div class="relative mb-4">
+                            <img src="${AppState.postImagePreview}" alt="Preview" class="w-full rounded-lg object-cover max-h-96">
+                            <button onclick="removeImage()" class="absolute top-2 right-2 bg-white hover:bg-gray-100 p-2 rounded-full shadow-lg transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                        <div class="flex gap-2">
+                            <label class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    <polyline points="21 15 16 10 5 21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                </svg>
+                                <span class="text-sm font-medium text-gray-700">Photo</span>
+                                <input type="file" accept="image/*" onchange="handleImageUpload(event)" class="hidden">
+                            </label>
+                        </div>
+                        <button 
+                            onclick="createPost()" 
+                            class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition ${!AppState.postContent.trim() ? 'opacity-50 cursor-not-allowed' : ''}"
+                            ${!AppState.postContent.trim() ? 'disabled' : ''}
+                        >
+                            Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderPost(post) {
+    const profile = AppState.getCurrentProfile();
+    const showComments = AppState.showComments[post.id] || false;
+    const commentInput = AppState.commentInputs[post.id] || '';
+    
+    return `
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+            <div class="p-6">
+                <div class="flex items-start gap-3 mb-4">
+                    <img src="${post.authorAvatar}" alt="${post.author}" class="w-10 h-10 rounded-full object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-semibold text-gray-900">${post.author}</div>
+                                <div class="text-sm text-gray-500">${post.timestamp}</div>
+                            </div>
+                            <span class="border border-purple-300 text-purple-700 bg-purple-50 px-3 py-1 rounded-full text-xs font-medium">${post.tag}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4 leading-relaxed">${post.content}</p>
+                ${post.image ? `<img src="${post.image}" alt="Post" class="w-full rounded-lg mb-4 object-cover h-64">` : ''}
+                
+                <div class="flex items-center gap-6 pt-4 border-t border-gray-200">
+                    <button onclick="toggleComments('${post.id}')" class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span class="text-sm font-medium">${post.replies} Replies</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span class="text-sm font-medium">${post.bookmarks} Bookmarks</span>
+                    </button>
+                    <button onclick="toggleLike('${post.id}')" class="flex items-center gap-2 ${post.isLiked ? 'text-red-500' : 'text-gray-600 hover:text-red-500'} transition-colors">
+                        <svg class="w-5 h-5 ${post.isLiked ? 'fill-current' : ''}" fill="${post.isLiked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span class="text-sm font-medium">${post.likes} Likes</span>
+                    </button>
+                </div>
+                
+                ${showComments ? `
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        ${post.comments.length > 0 ? `
+                            <div class="space-y-3 mb-4">
+                                ${post.comments.map(comment => `
+                                    <div class="flex items-start gap-3 bg-gray-50 p-3 rounded-lg">
+                                        <img src="${comment.authorAvatar}" alt="${comment.author}" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-semibold text-sm text-gray-900">${comment.author}</span>
+                                                <span class="text-xs text-gray-500">${comment.timestamp}</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 mt-1">${comment.content}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="flex items-center gap-2">
+                            <img src="${profile.photo}" alt="${profile.name}" class="w-8 h-8 rounded-full object-cover">
+                            <input
+                                type="text"
+                                placeholder="Write a comment..."
+                                value="${commentInput}"
+                                oninput="updateCommentInput('${post.id}', this.value)"
+                                onkeypress="if(event.key === 'Enter') addComment('${post.id}')"
+                                class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                            />
+                            <button 
+                                onclick="addComment('${post.id}')"
+                                class="text-purple-600 hover:text-purple-700 transition-colors ${!commentInput.trim() ? 'opacity-50 cursor-not-allowed' : ''}"
+                                ${!commentInput.trim() ? 'disabled' : ''}
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <line x1="22" y1="2" x2="11" y2="13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
 function renderMarketplace() {
     const profile = AppState.market;
+    const allPosts = AppState.getAllPosts();
+    
     return `
+        ${renderCreatePostModal()}
         <div class="min-h-screen bg-white text-gray-900">
             <nav class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
                 <div class="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
@@ -238,7 +530,7 @@ function renderMarketplace() {
                             </svg>
                             <span class="text-xs font-medium">Messages</span>
                         </button>
-                        <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+                        <button onclick="openCreatePost()" class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                 <line x1="12" y1="8" x2="12" y2="16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
@@ -269,46 +561,7 @@ function renderMarketplace() {
 
             <div class="max-w-[1600px] mx-auto px-6 py-8 grid grid-cols-12 gap-6">
                 <main class="col-span-8 space-y-4">
-                    ${marketMockPosts.map(post => `
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <div class="p-6">
-                                <div class="flex items-start gap-3 mb-4">
-                                    <img src="${post.authorAvatar}" alt="${post.author}" class="w-10 h-10 rounded-full object-cover">
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <div class="font-semibold text-gray-900">${post.author}</div>
-                                                <div class="text-sm text-gray-500">${post.timestamp}</div>
-                                            </div>
-                                            <span class="border border-purple-300 text-purple-700 bg-purple-50 px-3 py-1 rounded-full text-xs font-medium">${post.tag}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-gray-700 mb-4 leading-relaxed">${post.content}</p>
-                                ${post.image ? `<img src="${post.image}" alt="Post" class="w-full rounded-lg mb-4 object-cover h-64">` : ''}
-                                <div class="flex items-center gap-6 pt-4 border-t border-gray-200">
-                                    <button class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.replies} Replies</span>
-                                    </button>
-                                    <button class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.bookmarks} Bookmarks</span>
-                                    </button>
-                                    <button class="flex items-center gap-2 ${post.isLiked ? 'text-red-500' : 'text-gray-600 hover:text-red-500'} transition-colors">
-                                        <svg class="w-5 h-5 ${post.isLiked ? 'fill-current' : ''}" fill="${post.isLiked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.likes} Likes</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
+                    ${allPosts.map(post => renderPost(post)).join('')}
                 </main>
 
                 <aside class="col-span-4">
@@ -339,7 +592,10 @@ function renderMarketplace() {
 
 function renderProfessionalDashboard() {
     const profile = AppState.professional;
+    const allPosts = AppState.getAllPosts();
+    
     return `
+        ${renderCreatePostModal()}
         <div class="min-h-screen bg-white text-gray-900">
             <nav class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
                 <div class="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
@@ -363,7 +619,7 @@ function renderProfessionalDashboard() {
                             </svg>
                             <span class="text-xs font-medium">Home</span>
                         </button>
-                        <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+                        <button onclick="navigateTo('jobs')" class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -376,7 +632,7 @@ function renderProfessionalDashboard() {
                             </svg>
                             <span class="text-xs font-medium">Messages</span>
                         </button>
-                        <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+                        <button onclick="openCreatePost()" class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                 <line x1="12" y1="8" x2="12" y2="16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
@@ -416,46 +672,7 @@ function renderProfessionalDashboard() {
                 </aside>
 
                 <main class="col-span-6 space-y-4">
-                    ${professionalMockPosts.map(post => `
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <div class="p-6">
-                                <div class="flex items-start gap-3 mb-4">
-                                    <img src="${post.authorAvatar}" alt="${post.author}" class="w-10 h-10 rounded-full object-cover">
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <div class="font-semibold text-gray-900">${post.author}</div>
-                                                <div class="text-sm text-gray-500">${post.timestamp}</div>
-                                            </div>
-                                            <span class="border border-purple-300 text-purple-700 bg-purple-50 px-3 py-1 rounded-full text-xs font-medium">${post.tag}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-gray-700 mb-4 leading-relaxed">${post.content}</p>
-                                ${post.image ? `<img src="${post.image}" alt="Post" class="w-full rounded-lg mb-4 object-cover h-64">` : ''}
-                                <div class="flex items-center gap-6 pt-4 border-t border-gray-200">
-                                    <button class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.replies} Replies</span>
-                                    </button>
-                                    <button class="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.bookmarks} Bookmarks</span>
-                                    </button>
-                                    <button class="flex items-center gap-2 ${post.isLiked ? 'text-red-500' : 'text-gray-600 hover:text-red-500'} transition-colors">
-                                        <svg class="w-5 h-5 ${post.isLiked ? 'fill-current' : ''}" fill="${post.isLiked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">${post.likes} Likes</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
+                    ${allPosts.map(post => renderPost(post)).join('')}
                 </main>
 
                 <aside class="col-span-3">
@@ -522,7 +739,7 @@ function renderGigs() {
                             </svg>
                             <span class="text-xs font-medium">Messages</span>
                         </button>
-                        <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+                        <button onclick="openCreatePost()" class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                 <line x1="12" y1="8" x2="12" y2="16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
@@ -652,12 +869,133 @@ function renderGigs() {
     `;
 }
 
+function renderJobs() {
+    return `
+        <div class="min-h-screen bg-white text-gray-900">
+            <nav class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+                <div class="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
+                    <div class="ml-16 w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold shadow-md">IF</div>
+                    
+                    <div class="flex-1 max-w-xl">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+                            </svg>
+                            <input type="text" placeholder="Search for jobs..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-6">
+                        <button onclick="navigateTo('dashboard')" class="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-600 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <polyline points="9 22 9 12 15 12 15 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                            </svg>
+                            <span class="text-xs font-medium">Home</span>
+                        </button>
+                        <button class="flex flex-col items-center gap-1 text-purple-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            <span class="text-xs font-medium">Jobs</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                        <label class="text-sm text-gray-500 font-medium cursor-pointer" onclick="navigateTo('marketplace')">Market</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked onchange="if(!this.checked) navigateTo('marketplace')">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <label class="text-sm text-purple-600 font-medium cursor-pointer">Professional</label>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="max-w-[1600px] mx-auto px-6 py-8">
+                <div class="mb-6">
+                    <h1 class="text-3xl font-semibold text-gray-900 mb-1">Job Opportunities</h1>
+                    <p class="text-gray-600">Browse professional job listings</p>
+                </div>
+
+                <div class="grid grid-cols-12 gap-6">
+                    <aside class="col-span-3">
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 sticky top-24 shadow-sm">
+                            <h2 class="text-lg font-semibold text-gray-800 mb-4">Filters</h2>
+                            <div class="mb-4">
+                                <h3 class="text-sm font-semibold text-gray-700 mb-2">Job Type</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-2 text-sm text-gray-700">
+                                        <input type="checkbox" class="rounded text-purple-600">
+                                        <span>Full-time</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 text-sm text-gray-700">
+                                        <input type="checkbox" class="rounded text-purple-600">
+                                        <span>Part-time</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <main class="col-span-9 space-y-4">
+                        ${mockJobs.map(job => `
+                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                <div class="p-6">
+                                    <div class="flex gap-4">
+                                        <img src="${job.companyLogo}" alt="${job.company}" class="w-16 h-16 rounded-lg object-cover border border-gray-200">
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-2">
+                                                <div>
+                                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">${job.title}</h3>
+                                                    <p class="text-sm text-gray-600 mb-2">${job.company}</p>
+                                                </div>
+                                                <span class="bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs font-medium">${job.type}</span>
+                                            </div>
+                                            <div class="flex items-center gap-4 mb-3 text-sm text-gray-600">
+                                                <div class="flex items-center gap-1">
+                                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"></path>
+                                                        <circle cx="12" cy="10" r="3" stroke-width="2"></circle>
+                                                    </svg>
+                                                    <span>${job.location}</span>
+                                                </div>
+                                                <div class="flex items-center gap-1">
+                                                    <span class="font-semibold text-green-600">${job.salary}</span>
+                                                </div>
+                                                <span>${job.postedTime}</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 mb-3 leading-relaxed">${job.description}</p>
+                                            <div class="flex items-center gap-2 mb-4">
+                                                ${job.tags.map(tag => `<span class="border border-blue-200 text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full text-xs font-medium">${tag}</span>`).join('')}
+                                            </div>
+                                            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                                <span class="text-xs text-gray-500">${job.applicants} applicants</span>
+                                                <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition">
+                                                    Apply Now
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </main>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function renderProfile() {
     const profile = AppState.getCurrentProfile();
     return `
         <div class="min-h-screen bg-gray-50">
             <div class="w-full h-72 bg-cover bg-center relative" style="background-image: url('${profile.banner}')">
-                <button onclick="navigateTo(AppState.profileMode === 'market' ? 'marketplace' : 'dashboard')" class="absolute top-4 left-4 bg-white/90 hover:bg-white px-4 py-2 rounded-lg font-medium transition shadow-md flex items-center gap-2">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/20"></div>
+                <button onclick="navigateTo(AppState.profileMode === 'market' ? 'marketplace' : 'dashboard')" class="absolute top-4 left-4 bg-white/90 hover:bg-white px-4 py-2 rounded-lg font-medium transition shadow-md flex items-center gap-2 z-10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <line x1="19" y1="12" x2="5" y2="12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
                         <polyline points="12 19 5 12 12 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
@@ -666,7 +1004,7 @@ function renderProfile() {
                 </button>
             </div>
             <div class="max-w-5xl mx-auto px-6">
-                <div class="flex items-end gap-6 -mt-24 mb-8">
+                <div class="flex items-end gap-6 -mt-24 mb-8 relative z-10">
                     <img src="${profile.photo}" alt="${profile.name}" class="w-40 h-40 rounded-full border-5 border-white object-cover shadow-xl">
                     <div class="bg-white p-6 rounded-lg shadow-md flex-1 mb-4">
                         <h1 class="text-2xl font-bold text-gray-900 mb-2">${profile.name}</h1>
@@ -714,6 +1052,9 @@ function render() {
             break;
         case 'dashboard':
             app.innerHTML = renderProfessionalDashboard();
+            break;
+        case 'jobs':
+            app.innerHTML = renderJobs();
             break;
         case 'profile':
             app.innerHTML = renderProfile();
