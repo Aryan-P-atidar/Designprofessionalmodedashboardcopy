@@ -64,7 +64,7 @@ export default function App() {
   });
 
   // Determine which profile to use based on the current mode
-  const currentMode = activeScreen === 'marketplace' ? 'market' : 
+  const currentMode = activeScreen === 'marketplace' || activeScreen === 'gigs' ? 'market' : 
                       activeScreen === 'profile' ? profileMode : 
                       'professional';
   const profilePhoto = currentMode === 'market' ? marketProfilePhoto : profProfilePhoto;
@@ -86,7 +86,7 @@ export default function App() {
   // Handler to navigate to user profile
   const handleNavigateToProfile = () => {
     // Set the profile mode based on current screen
-    if (activeScreen === 'marketplace') {
+    if (activeScreen === 'marketplace' || activeScreen === 'gigs') {
       setProfileMode('market');
     } else {
       setProfileMode('professional');
@@ -98,7 +98,7 @@ export default function App() {
   const handleNavigate = (screen: 'dashboard' | 'marketplace' | 'profile' | 'jobs' | 'gigs') => {
     // When navigating from drawer, set the profile mode based on current context
     if (screen === 'profile') {
-      if (activeScreen === 'marketplace') {
+      if (activeScreen === 'marketplace' || activeScreen === 'gigs') {
         setProfileMode('market');
       } else {
         setProfileMode('professional');
