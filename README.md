@@ -1,7 +1,7 @@
 
-  # Design Professional Mode Dashboard (Copy)
+  # DesigN
 
-  This is a code bundle for Design Professional Mode Dashboard (Copy). The original project is available at https://www.figma.com/design/I8OoEkSyiaIZJ4tOMqqpF0/Design-Professional-Mode-Dashboard--Copy-.
+  This is a code bundle for DesigN. The original project is available at https://www.figma.com/design/I8OoEkSyiaIZJ4tOMqqpF0/DesigN.
 
   ## Running the code
 

@@ -256,6 +256,118 @@ window.updateLocation = function(value) {
     gigsFilterState.location = value;
 };
 
+// Professional Jobs Filter State
+const professionalJobsFilterState = {
+    categories: [
+        {
+            id: 'technology',
+            name: 'Technology & Digital',
+            subcategories: [
+                { name: 'Software Development', fields: ['SaaS', 'Mobile Apps', 'Web Platforms', 'DevOps'] },
+                { name: 'AI & Data', fields: ['Machine Learning', 'Data Visualization', 'Analytics Dashboards'] },
+                { name: 'Cybersecurity', fields: ['Identity Management', 'Encryption', 'Security Auditing'] },
+                { name: 'Infrastructure', fields: ['Cloud Computing', 'Web3/Blockchain', 'IoT'] }
+            ]
+        },
+        {
+            id: 'healthcare',
+            name: 'Healthcare & Wellness',
+            subcategories: [
+                { name: 'Clinical', fields: ['Telemedicine', 'Patient Management', 'Hospital Systems'] },
+                { name: 'BioTech', fields: ['Lab Research', 'Pharmaceuticals', 'Genomic Data'] },
+                { name: 'HealthTech', fields: ['Fitness Tracking', 'Mental Health Apps', 'Wearables'] },
+                { name: 'Insurance', fields: ['Medical Billing', 'Claims Processing', 'Policy Management'] }
+            ]
+        },
+        {
+            id: 'commerce',
+            name: 'Commerce & Finance',
+            subcategories: [
+                { name: 'Banking', fields: ['Personal Finance', 'Investment Portfolios', 'Neobanking'] },
+                { name: 'E-commerce', fields: ['Retail', 'Marketplaces', 'B2B Procurement'] },
+                { name: 'Payments', fields: ['POS Systems', 'Crypto Wallets', 'Payment Gateways'] },
+                { name: 'Real Estate', fields: ['PropTech', 'Property Management', 'Mortgage Services'] }
+            ]
+        },
+        {
+            id: 'marketing',
+            name: 'Marketing & Creative',
+            subcategories: [
+                { name: 'Advertising', fields: ['Campaign Management', 'AdTech', 'Social Media'] },
+                { name: 'Branding', fields: ['Identity Systems', 'Style Guides', 'Presentation Design'] },
+                { name: 'Content', fields: ['CMS', 'Digital Asset Management'] },
+                { name: 'Research', fields: ['User Testing', 'Market Analysis', 'Surveying Tools'] }
+            ]
+        },
+        {
+            id: 'education',
+            name: 'Education & Human Resources',
+            subcategories: [
+                { name: 'EdTech', fields: ['Learning Management Systems (LMS)', 'Online Courses', 'K-12'] },
+                { name: 'HR Tech', fields: ['Recruitment', 'Employee Onboarding', 'Payroll', 'Performance Reviews'] },
+                { name: 'Collaboration', fields: ['Productivity Tools', 'Project Management', 'Virtual Office'] }
+            ]
+        },
+        {
+            id: 'industrial',
+            name: 'Industrial & Environmental',
+            subcategories: [
+                { name: 'Logistics', fields: ['Supply Chain', 'Fleet Management', 'Last-mile Delivery'] },
+                { name: 'Sustainability', fields: ['Green Energy', 'ESG Reporting', 'Carbon Tracking'] },
+                { name: 'Manufacturing', fields: ['Smart Factories', 'CAD Tools', 'Inventory Control'] }
+            ]
+        }
+    ],
+    expandedCategory: 'technology',
+    expandedSubcategory: '',
+    selectedFilters: [],
+    minSalary: 50000,
+    maxSalary: 150000,
+    experienceLevel: 'Entry Level',
+    location: ''
+};
+
+window.toggleJobCategory = function(categoryId) {
+    professionalJobsFilterState.expandedCategory = 
+        professionalJobsFilterState.expandedCategory === categoryId ? '' : categoryId;
+    render();
+};
+
+window.toggleJobSubcategory = function(subcategoryName) {
+    professionalJobsFilterState.expandedSubcategory = 
+        professionalJobsFilterState.expandedSubcategory === subcategoryName ? '' : subcategoryName;
+    render();
+};
+
+window.toggleJobFilter = function(filter) {
+    const index = professionalJobsFilterState.selectedFilters.indexOf(filter);
+    if (index > -1) {
+        professionalJobsFilterState.selectedFilters.splice(index, 1);
+    } else {
+        professionalJobsFilterState.selectedFilters.push(filter);
+    }
+    render();
+};
+
+window.updateJobMinSalary = function(value) {
+    professionalJobsFilterState.minSalary = parseInt(value);
+    render();
+};
+
+window.updateJobMaxSalary = function(value) {
+    professionalJobsFilterState.maxSalary = parseInt(value);
+    render();
+};
+
+window.updateJobLocation = function(value) {
+    professionalJobsFilterState.location = value;
+};
+
+window.updateExperienceLevel = function(value) {
+    professionalJobsFilterState.experienceLevel = value;
+    render();
+};
+
 // ============================================
 // POST ACTIONS
 // ============================================
@@ -578,20 +690,20 @@ function renderMarketplace() {
         ${renderCreatePostModal()}
         <div class="min-h-screen bg-white text-gray-900">
             <nav class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
-                <div class="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
-                    <div class="ml-16 w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold shadow-md">IF</div>
+                <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-6">
+                    <div class="ml-0 sm:ml-16 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-sm sm:text-base font-bold shadow-md">IF</div>
                     
                     <div class="flex-1 max-w-xl">
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
                             </svg>
-                            <input type="text" placeholder="Search for local jobs, gigs, or services..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
+                            <input type="text" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-6">
+                    <div class="hidden md:flex items-center gap-4 lg:gap-6">
                         <button class="flex flex-col items-center gap-1 text-purple-600">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -630,23 +742,23 @@ function renderMarketplace() {
                         </button>
                     </div>
 
-                    <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
-                        <label for="mode-toggle-market" class="text-sm text-purple-600 font-medium cursor-pointer">Market</label>
+                    <div class="hidden sm:flex items-center gap-2 bg-gray-50 px-3 sm:px-4 py-2 rounded-lg border border-gray-200">
+                        <label for="mode-toggle-market" class="text-xs sm:text-sm text-purple-600 font-medium cursor-pointer">Market</label>
                         <label class="toggle-switch">
                             <input type="checkbox" id="mode-toggle-market" onchange="if(this.checked) navigateTo('dashboard')">
                             <span class="toggle-slider"></span>
                         </label>
-                        <label class="text-sm text-gray-500 font-medium cursor-pointer" onclick="navigateTo('dashboard')">Professional</label>
+                        <label class="text-xs sm:text-sm text-gray-500 font-medium cursor-pointer" onclick="navigateTo('dashboard')">Professional</label>
                     </div>
                 </div>
             </nav>
 
-            <div class="max-w-[1600px] mx-auto px-6 py-8 grid grid-cols-12 gap-6">
-                <main class="col-span-8 space-y-4">
+            <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+                <main class="col-span-1 lg:col-span-8 space-y-4">
                     ${allPosts.map(post => renderPost(post)).join('')}
                 </main>
 
-                <aside class="col-span-4">
+                <aside class="hidden lg:block lg:col-span-4">
                     <div class="sticky top-24">
                         <h2 class="text-lg font-semibold mb-4 px-2 text-gray-900">Side-Quest Board</h2>
                         <div class="space-y-3">
@@ -680,20 +792,20 @@ function renderProfessionalDashboard() {
         ${renderCreatePostModal()}
         <div class="min-h-screen bg-white text-gray-900">
             <nav class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
-                <div class="max-w-[1600px] mx-auto px-6 py-4 flex items-center gap-6">
-                    <div class="ml-16 w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold shadow-md">IF</div>
+                <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-6">
+                    <div class="ml-0 sm:ml-16 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-sm sm:text-base font-bold shadow-md">IF</div>
                     
                     <div class="flex-1 max-w-xl">
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
                             </svg>
-                            <input type="text" placeholder="Search for professionals, jobs, or projects..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
+                            <input type="text" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-6">
+                    <div class="hidden md:flex items-center gap-4 lg:gap-6">
                         <button class="flex flex-col items-center gap-1 text-purple-600">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -732,19 +844,19 @@ function renderProfessionalDashboard() {
                         </button>
                     </div>
 
-                    <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
-                        <label class="text-sm text-gray-500 font-medium cursor-pointer" onclick="navigateTo('marketplace')">Market</label>
+                    <div class="hidden sm:flex items-center gap-2 bg-gray-50 px-3 sm:px-4 py-2 rounded-lg border border-gray-200">
+                        <label class="text-xs sm:text-sm text-gray-500 font-medium cursor-pointer" onclick="navigateTo('marketplace')">Market</label>
                         <label class="toggle-switch">
                             <input type="checkbox" id="mode-toggle-prof" checked onchange="if(!this.checked) navigateTo('marketplace')">
                             <span class="toggle-slider"></span>
                         </label>
-                        <label for="mode-toggle-prof" class="text-sm text-purple-600 font-medium cursor-pointer">Professional</label>
+                        <label for="mode-toggle-prof" class="text-xs sm:text-sm text-purple-600 font-medium cursor-pointer">Professional</label>
                     </div>
                 </div>
             </nav>
 
-            <div class="max-w-[1600px] mx-auto px-6 py-8 grid grid-cols-12 gap-6">
-                <aside class="col-span-3 space-y-4">
+            <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+                <aside class="hidden lg:block lg:col-span-3 space-y-4">
                     <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
                         <div class="p-4">
                             <h3 class="font-semibold text-sm mb-2 text-gray-900">Updates</h3>
@@ -753,11 +865,11 @@ function renderProfessionalDashboard() {
                     </div>
                 </aside>
 
-                <main class="col-span-6 space-y-4">
+                <main class="col-span-1 lg:col-span-6 space-y-4">
                     ${allPosts.map(post => renderPost(post)).join('')}
                 </main>
 
-                <aside class="col-span-3">
+                <aside class="hidden lg:block lg:col-span-3">
                     <div class="sticky top-24">
                         <h2 class="text-lg font-semibold mb-4 px-2 text-gray-900">Side-Quest Board</h2>
                         <div class="space-y-3">
@@ -850,19 +962,19 @@ function renderGigs() {
                 </div>
             </nav>
 
-            <div class="max-w-[1600px] mx-auto px-6 py-8">
+            <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 sm:py-8">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <h1 class="text-3xl font-semibold text-gray-900 mb-1">Available Gigs & Jobs</h1>
-                        <p class="text-gray-600">Find local opportunities in your area</p>
+                        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-1">Available Gigs & Jobs</h1>
+                        <p class="text-sm sm:text-base text-gray-600">Find local opportunities in your area</p>
                     </div>
-                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-lg font-medium hover:shadow-lg transition-shadow">
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg text-sm font-medium hover:shadow-lg transition-shadow">
                         Post a Gig
                     </button>
                 </div>
 
-                <div class="grid grid-cols-12 gap-6">
-                    <aside class="col-span-3">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+                    <aside class="hidden lg:block lg:col-span-3">
                         <div class="bg-gradient-to-br from-purple-100/60 via-pink-50/60 to-blue-50/60 backdrop-blur-sm rounded-2xl p-6 sticky top-24 shadow-sm border border-white/40">
                             <h2 class="text-xl font-semibold text-gray-800 mb-6">Filter</h2>
 
@@ -982,7 +1094,7 @@ function renderGigs() {
                         </div>
                     </aside>
 
-                    <main class="col-span-9 space-y-4">
+                    <main class="col-span-1 lg:col-span-9 space-y-4">
                         ${mockGigs.map(gig => `
                             <div class="bg-white/80 backdrop-blur-sm border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
                                 <div class="p-6">
@@ -1100,33 +1212,164 @@ function renderJobs() {
                 </div>
             </nav>
 
-            <div class="max-w-[1600px] mx-auto px-6 py-8">
+            <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 sm:py-8">
                 <div class="mb-6">
-                    <h1 class="text-3xl font-semibold text-gray-900 mb-1">Job Opportunities</h1>
-                    <p class="text-gray-600">Browse professional job listings</p>
+                    <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-1">Job Opportunities</h1>
+                    <p class="text-sm sm:text-base text-gray-600">Browse professional job listings</p>
                 </div>
 
-                <div class="grid grid-cols-12 gap-6">
-                    <aside class="col-span-3">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+                    <aside class="hidden lg:block lg:col-span-3">
                         <div class="bg-white border border-gray-200 rounded-lg p-6 sticky top-24 shadow-sm">
-                            <h2 class="text-lg font-semibold text-gray-800 mb-4">Filters</h2>
-                            <div class="mb-4">
-                                <h3 class="text-sm font-semibold text-gray-700 mb-2">Job Type</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center gap-2 text-sm text-gray-700">
-                                        <input type="checkbox" class="rounded text-purple-600">
-                                        <span>Full-time</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 text-sm text-gray-700">
-                                        <input type="checkbox" class="rounded text-purple-600">
-                                        <span>Part-time</span>
-                                    </label>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-6">Filters</h2>
+                            
+                            <!-- Profession Categories -->
+                            <div class="space-y-3 mb-6 max-h-[300px] overflow-y-auto">
+                                ${professionalJobsFilterState.categories.map(category => `
+                                    <div>
+                                        <button
+                                            onclick="toggleJobCategory('${category.id}')"
+                                            class="w-full flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors"
+                                        >
+                                            <span class="text-left">${category.name}</span>
+                                            ${category.subcategories.length > 0 ? (
+                                                professionalJobsFilterState.expandedCategory === category.id 
+                                                    ? `<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <polyline points="18 15 12 9 6 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                    </svg>`
+                                                    : `<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                    </svg>`
+                                            ) : ''}
+                                        </button>
+                                        
+                                        ${professionalJobsFilterState.expandedCategory === category.id && category.subcategories.length > 0 ? `
+                                            <div class="ml-2 mt-2 space-y-2">
+                                                ${category.subcategories.map(sub => `
+                                                    <div>
+                                                        <button
+                                                            onclick="toggleJobSubcategory('${sub.name}')"
+                                                            class="w-full flex items-center justify-between py-2 text-xs font-medium text-gray-600 hover:text-purple-600 transition-colors"
+                                                        >
+                                                            <span class="text-left">${sub.name}</span>
+                                                            ${sub.fields.length > 0 ? (
+                                                                professionalJobsFilterState.expandedSubcategory === sub.name
+                                                                    ? `<svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <polyline points="18 15 12 9 6 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                                    </svg>`
+                                                                    : `<svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                                    </svg>`
+                                                            ) : ''}
+                                                        </button>
+                                                        
+                                                        ${professionalJobsFilterState.expandedSubcategory === sub.name && sub.fields.length > 0 ? `
+                                                            <div class="ml-3 mt-2 space-y-2">
+                                                                ${sub.fields.map(field => `
+                                                                    <label class="flex items-start gap-2 text-xs text-gray-600 cursor-pointer hover:text-purple-600">
+                                                                        <input
+                                                                            type="checkbox"
+                                                                            ${professionalJobsFilterState.selectedFilters.includes(field) ? 'checked' : ''}
+                                                                            onchange="toggleJobFilter('${field}')"
+                                                                            class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 mt-0.5 flex-shrink-0"
+                                                                        />
+                                                                        <span class="break-words">${field}</span>
+                                                                    </label>
+                                                                `).join('')}
+                                                            </div>
+                                                        ` : ''}
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Location Filter -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Location
+                                </label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="12" cy="10" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g., Remote, Indore, Not Applicable"
+                                        value="${professionalJobsFilterState.location}"
+                                        oninput="updateJobLocation(this.value)"
+                                        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                                    />
                                 </div>
                             </div>
+
+                            <!-- Experience Level -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Experience Level
+                                </label>
+                                <select 
+                                    onchange="updateExperienceLevel(this.value)"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                                >
+                                    <option ${professionalJobsFilterState.experienceLevel === 'Entry Level' ? 'selected' : ''}>Entry Level</option>
+                                    <option ${professionalJobsFilterState.experienceLevel === 'Mid Level' ? 'selected' : ''}>Mid Level</option>
+                                    <option ${professionalJobsFilterState.experienceLevel === 'Senior Level' ? 'selected' : ''}>Senior Level</option>
+                                    <option ${professionalJobsFilterState.experienceLevel === 'Executive' ? 'selected' : ''}>Executive</option>
+                                </select>
+                            </div>
+
+                            <!-- Salary Range -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Salary Range
+                                </label>
+                                <div class="space-y-4">
+                                    <div class="px-2">
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="300000"
+                                            value="${professionalJobsFilterState.minSalary}"
+                                            oninput="updateJobMinSalary(this.value)"
+                                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                        />
+                                        <div class="flex justify-between mt-1 text-xs text-gray-500">
+                                            <span>Min: $${professionalJobsFilterState.minSalary.toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="300000"
+                                            value="${professionalJobsFilterState.maxSalary}"
+                                            oninput="updateJobMaxSalary(this.value)"
+                                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                        />
+                                        <div class="flex justify-between mt-1 text-xs text-gray-500">
+                                            <span>Max: $${professionalJobsFilterState.maxSalary.toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Custom Salary"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Apply Filters Button -->
+                            <button class="w-full bg-purple-600 text-white py-2.5 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+                                Apply Filters
+                            </button>
                         </div>
                     </aside>
 
-                    <main class="col-span-9 space-y-4">
+                    <main class="col-span-1 lg:col-span-9 space-y-4">
                         ${mockJobs.map(job => `
                             <div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all">
                                 <div class="p-6">
