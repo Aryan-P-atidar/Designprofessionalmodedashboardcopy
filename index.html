@@ -3,742 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>In-Foloio - Professional Networking Platform</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>In-Folio - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Screen Selector Tabs -->
-    <div class="screen-selector">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchScreen('dashboard')">Professional Dashboard</button>
-            <button class="tab-btn" onclick="switchScreen('marketplace')">Local Marketplace</button>
-            <button class="tab-btn" onclick="switchScreen('profile')">User Profile</button>
-        </div>
-    </div>
-
-    <!-- Screen 1: Professional Dashboard -->
-    <div id="dashboard" class="screen active">
-        <!-- Top Navigation -->
-        <nav class="top-nav">
-            <div class="nav-container">
-                <div class="logo">In-Foloio</div>
+<body class="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center">
+                <!-- Logo -->
+                <div class="w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <span class="text-3xl font-bold text-white">IF</span>
+                </div>
                 
-                <div class="search-bar">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" placeholder="Search for jobs, people, or projects...">
+                <!-- Title -->
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                    Welcome to In-Folio
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Professional Networking Platform
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="space-y-4">
+                    <a href="complete-app.html" class="block w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-lg font-semibold text-lg hover:shadow-lg transition-all transform hover:scale-105">
+                        View Demo →
+                    </a>
+                    
+                    <a href="login.html" class="block w-full border-2 border-purple-600 text-purple-600 py-4 rounded-lg font-semibold text-lg hover:bg-purple-50 transition-all">
+                        Sign In / Sign Up
+                    </a>
                 </div>
-
-                <div class="nav-icons">
-                    <button class="nav-icon-btn active">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        </svg>
-                        <span>Home</span>
-                    </button>
-                    <button class="nav-icon-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
-                        <span>Jobs</span>
-                    </button>
-                    <button class="nav-icon-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        <span>Messages</span>
-                    </button>
-                    <button class="nav-icon-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                        </svg>
-                        <span>Notifications</span>
-                        <span class="notification-dot"></span>
-                    </button>
-                </div>
-
-                <div class="mode-toggle">
-                    <label>Local</label>
-                    <input type="checkbox" checked>
-                    <label class="active">Professional</label>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="main-container">
-            <!-- Left Column - User Profile -->
-            <aside class="left-column">
-                <div class="profile-card">
-                    <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" alt="Profile" class="profile-avatar">
-                    <h3>Sarah Chen</h3>
-                    <div class="badge verified-badge">
-                        <span class="dot"></span>
-                        AI Skill Verified
+                
+                <!-- Features -->
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Dual Modes</h3>
+                        <p class="text-sm text-gray-600">Professional & Market accounts</p>
                     </div>
-                    <div class="profile-stats">
-                        <div class="stat">
-                            <div class="stat-number">245</div>
-                            <div class="stat-label">Connections</div>
+                    
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-                        <div class="stat">
-                            <div class="stat-number">89</div>
-                            <div class="stat-label">Projects</div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Jobs & Gigs</h3>
+                        <p class="text-sm text-gray-600">Find opportunities easily</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-                        <div class="stat">
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">Circles</div>
-                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Secure Auth</h3>
+                        <p class="text-sm text-gray-600">JWT token authentication</p>
                     </div>
                 </div>
-            </aside>
-
-            <!-- Center Column - Feed -->
-            <main class="center-column">
-                <!-- Post 1 -->
-                <article class="post-card">
-                    <div class="post-header">
-                        <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" alt="Avatar" class="post-avatar">
-                        <div class="post-author-info">
-                            <div class="post-author">Sarah Chen</div>
-                            <div class="post-time">2h ago</div>
-                        </div>
-                        <span class="badge tag-badge">#Hiring</span>
-                    </div>
-                    <p class="post-content">Looking for a Senior React Developer to join our growing team. Remote-first company, competitive salary, and amazing benefits. Must have 5+ years of experience with modern React, TypeScript, and Next.js.</p>
-                    <img src="https://images.unsplash.com/photo-1646153114001-495dfb56506d?w=600" alt="Post" class="post-image">
-                    <div class="post-actions">
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>12 Replies</span>
-                        </button>
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>34 Bookmarks</span>
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Post 2 -->
-                <article class="post-card">
-                    <div class="post-header">
-                        <img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?w=100" alt="Avatar" class="post-avatar">
-                        <div class="post-author-info">
-                            <div class="post-author">Alex Kumar</div>
-                            <div class="post-time">4h ago</div>
-                        </div>
-                        <span class="badge tag-badge">#TechUpdate</span>
-                    </div>
-                    <p class="post-content">Just shipped our new design system! Built with Tailwind CSS v4 and Radix UI. The developer experience is incredible. Check out the documentation and let me know what you think.</p>
-                    <img src="https://images.unsplash.com/photo-1637937459053-c788742455be?w=600" alt="Post" class="post-image">
-                    <div class="post-actions">
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>8 Replies</span>
-                        </button>
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>56 Bookmarks</span>
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Post 3 -->
-                <article class="post-card">
-                    <div class="post-header">
-                        <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" alt="Avatar" class="post-avatar">
-                        <div class="post-author-info">
-                            <div class="post-author">Maya Patel</div>
-                            <div class="post-time">6h ago</div>
-                        </div>
-                        <span class="badge tag-badge">#ProjectShowcase</span>
-                    </div>
-                    <p class="post-content">Excited to share my latest project - a mobile-first e-commerce platform with real-time inventory tracking. Built with React Native and Firebase. The performance improvements are amazing!</p>
-                    <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600" alt="Post" class="post-image">
-                    <div class="post-actions">
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>15 Replies</span>
-                        </button>
-                        <button class="action-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            <span>89 Bookmarks</span>
-                        </button>
-                    </div>
-                </article>
-            </main>
-
-            <!-- Right Column - Side Quest Board -->
-            <aside class="right-column">
-                <h2>Side-Quest Board</h2>
-                <div class="quest-cards">
-                    <div class="quest-card">
-                        <h3>Need a React Dev for the weekend</h3>
-                        <p>Quick project: Build a landing page with animations</p>
-                        <div class="quest-footer">
-                            <div class="quest-tags">
-                                <span class="badge small-badge">React</span>
-                                <span class="badge small-badge">Framer Motion</span>
-                            </div>
-                            <span class="quest-duration">2 days</span>
-                        </div>
-                    </div>
-                    <div class="quest-card">
-                        <h3>UI/UX Review Session</h3>
-                        <p>Looking for feedback on mobile app design</p>
-                        <div class="quest-footer">
-                            <div class="quest-tags">
-                                <span class="badge small-badge">Design</span>
-                                <span class="badge small-badge">Mobile</span>
-                            </div>
-                            <span class="quest-duration">2 hours</span>
-                        </div>
-                    </div>
-                    <div class="quest-card">
-                        <h3>API Integration Help</h3>
-                        <p>Need help integrating Stripe payment gateway</p>
-                        <div class="quest-footer">
-                            <div class="quest-tags">
-                                <span class="badge small-badge">Backend</span>
-                                <span class="badge small-badge">Stripe</span>
-                            </div>
-                            <span class="quest-duration">1 day</span>
-                        </div>
-                    </div>
-                    <div class="quest-card">
-                        <h3>Code Review Partner</h3>
-                        <p>Looking for someone to review my TypeScript code</p>
-                        <div class="quest-footer">
-                            <div class="quest-tags">
-                                <span class="badge small-badge">TypeScript</span>
-                                <span class="badge small-badge">Code Review</span>
-                            </div>
-                            <span class="quest-duration">3 hours</span>
-                        </div>
-                    </div>
+                
+                <!-- Info Box -->
+                <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-blue-800">
+                        <strong>Demo Mode:</strong> Click "View Demo" to explore without login, or use "Sign In" to access with authentication.
+                    </p>
                 </div>
-            </aside>
-        </div>
-    </div>
-
-    <!-- Screen 2: Local Marketplace -->
-    <div id="marketplace" class="screen">
-        <div class="mobile-container">
-            <!-- Mobile Top Nav -->
-            <nav class="mobile-nav">
-                <div class="logo">In-Foloio</div>
-                <div class="mode-toggle mobile-toggle">
-                    <label class="active">Local</label>
-                    <input type="checkbox">
-                    <label>Professional</label>
-                </div>
-                <button class="location-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    2km
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-            </nav>
-
-            <!-- Hero Section -->
-            <div class="hero-section">
-                <div class="ai-assistant-card">
-                    <div class="mic-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Speak to the AI Assistant</h2>
-                        <p>Build your profile in seconds with your voice</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Job Cards -->
-            <div class="jobs-container">
-                <h2>Local Jobs Near You</h2>
-
-                <!-- Job 1 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <img src="https://images.unsplash.com/photo-1648808694138-6706c5efc80a?w=100" alt="Company" class="company-logo">
-                        <div class="job-title-section">
-                            <h3>Cafe Manager</h3>
-                            <p>The Coffee Hub</p>
-                        </div>
-                        <span class="badge verified-badge small">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            Verified
-                        </span>
-                    </div>
-                    <div class="job-details">
-                        <div class="detail-tag salary-tag">
-                            <span class="emoji">💰</span>
-                            <div>
-                                <div class="detail-label">Salary</div>
-                                <div class="detail-value">₹18,000/month</div>
-                            </div>
-                        </div>
-                        <div class="detail-tag location-tag">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            <div>
-                                <div class="detail-label">Location</div>
-                                <div class="detail-value">Sector 21, Raipur</div>
-                            </div>
-                            <span class="badge small-badge">2km away</span>
-                        </div>
-                    </div>
-                    <div class="job-meta">
-                        <span class="job-type">Full-time</span>
-                        <span>Posted 2 hours ago</span>
-                    </div>
-                    <div class="job-actions">
-                        <button class="whatsapp-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            Apply via WhatsApp
-                        </button>
-                        <button class="audio-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <line x1="12" y1="19" x2="12" y2="23"></line>
-                                <line x1="8" y1="23" x2="16" y2="23"></line>
-                            </svg>
-                            Record Audio Pitch
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Job 2 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <img src="https://images.unsplash.com/photo-1562280963-8a5475740a10?w=100" alt="Company" class="company-logo">
-                        <div class="job-title-section">
-                            <h3>Retail Staff</h3>
-                            <p>Fashion Central</p>
-                        </div>
-                        <span class="badge verified-badge small">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            Verified
-                        </span>
-                    </div>
-                    <div class="job-details">
-                        <div class="detail-tag salary-tag">
-                            <span class="emoji">💰</span>
-                            <div>
-                                <div class="detail-label">Salary</div>
-                                <div class="detail-value">₹15,000/month</div>
-                            </div>
-                        </div>
-                        <div class="detail-tag location-tag">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            <div>
-                                <div class="detail-label">Location</div>
-                                <div class="detail-value">City Center Mall</div>
-                            </div>
-                            <span class="badge small-badge">3.5km away</span>
-                        </div>
-                    </div>
-                    <div class="job-meta">
-                        <span class="job-type">Full-time</span>
-                        <span>Posted 2 hours ago</span>
-                    </div>
-                    <div class="job-actions">
-                        <button class="whatsapp-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            Apply via WhatsApp
-                        </button>
-                        <button class="audio-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <line x1="12" y1="19" x2="12" y2="23"></line>
-                                <line x1="8" y1="23" x2="16" y2="23"></line>
-                            </svg>
-                            Record Audio Pitch
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Job 3 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <img src="https://images.unsplash.com/photo-1665360755361-d8cd03c82b28?w=100" alt="Company" class="company-logo">
-                        <div class="job-title-section">
-                            <h3>Delivery Partner</h3>
-                            <p>Quick Delivery Co.</p>
-                        </div>
-                        <span class="badge verified-badge small">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            Verified
-                        </span>
-                    </div>
-                    <div class="job-details">
-                        <div class="detail-tag salary-tag">
-                            <span class="emoji">💰</span>
-                            <div>
-                                <div class="detail-label">Salary</div>
-                                <div class="detail-value">₹20,000/month</div>
-                            </div>
-                        </div>
-                        <div class="detail-tag location-tag">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            <div>
-                                <div class="detail-label">Location</div>
-                                <div class="detail-value">Multiple locations</div>
-                            </div>
-                            <span class="badge small-badge">1.2km away</span>
-                        </div>
-                    </div>
-                    <div class="job-meta">
-                        <span class="job-type">Flexible hours</span>
-                        <span>Posted 2 hours ago</span>
-                    </div>
-                    <div class="job-actions">
-                        <button class="whatsapp-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            Apply via WhatsApp
-                        </button>
-                        <button class="audio-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <line x1="12" y1="19" x2="12" y2="23"></line>
-                                <line x1="8" y1="23" x2="16" y2="23"></line>
-                            </svg>
-                            Record Audio Pitch
-                        </button>
-                    </div>
+                
+                <!-- Footer -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <p class="text-sm text-gray-500">
+                        For authentication features, start the backend server with <code class="bg-gray-100 px-2 py-1 rounded text-purple-600">npm run server</code>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Screen 3: User Profile -->
-    <div id="profile" class="screen">
-        <!-- Profile Banner -->
-        <div class="profile-banner">
-            <img src="https://images.unsplash.com/photo-1665707888808-d44ad6ff690d?w=1200" alt="Banner">
-            <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=200" alt="Profile" class="profile-pic">
-        </div>
-
-        <!-- Profile Header -->
-        <div class="profile-header">
-            <div class="profile-info">
-                <h1>Sarah Chen</h1>
-                <div class="badge verified-badge">
-                    <span class="dot"></span>
-                    AI Verified: Frontend Developer
-                </div>
-                <div class="profile-meta">
-                    <span>245 Connections</span>
-                    <span>•</span>
-                    <span>San Francisco, CA</span>
-                    <span>•</span>
-                    <span>Open to opportunities</span>
-                </div>
-            </div>
-            <div class="profile-actions">
-                <button class="btn-primary">Connect</button>
-                <button class="btn-secondary">Message</button>
-            </div>
-        </div>
-
-        <!-- Main Profile Content -->
-        <div class="profile-content">
-            <div class="profile-main">
-                <h2>Proof of Work</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>E-Commerce Dashboard</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>E-Commerce Dashboard</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card tall">
-                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>Mobile App Design System</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491z"/>
-                                </svg>
-                                <span>Figma</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Mobile App Design System</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491z"/>
-                                </svg>
-                                <span>Figma</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1565489030990-e211075fe11c?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>React Performance Tips</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                </svg>
-                                <span>Blog</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>React Performance Tips</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                </svg>
-                                <span>Blog</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1694599048261-a1de00f0117e?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>Portfolio Website v3</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                </svg>
-                                <span>Website</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Portfolio Website v3</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                </svg>
-                                <span>Website</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card tall">
-                        <img src="https://images.unsplash.com/photo-1637937459053-c788742455be?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>Open Source React Library</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Open Source React Library</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=400" alt="Project">
-                        <div class="project-overlay">
-                            <h3>SaaS Landing Page</h3>
-                            <div class="platform-info">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491z"/>
-                                </svg>
-                                <span>Figma</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>SaaS Landing Page</h3>
-                            <div class="platform-tag">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491z"/>
-                                </svg>
-                                <span>Figma</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="profile-sidebar">
-                <div class="sidebar-card">
-                    <h3>Top Skills</h3>
-                    <div class="skills-tags">
-                        <span class="badge skill-badge">React</span>
-                        <span class="badge skill-badge">TypeScript</span>
-                        <span class="badge skill-badge">Next.js</span>
-                        <span class="badge skill-badge">Tailwind</span>
-                        <span class="badge skill-badge">UI/UX</span>
-                        <span class="badge skill-badge">Node.js</span>
-                    </div>
-                </div>
-
-                <div class="sidebar-card">
-                    <h3>Activity Stats</h3>
-                    <div class="stats-list">
-                        <div class="stat-item">
-                            <div class="stat-header">
-                                <span>Profile Views</span>
-                                <span class="stat-value">1,234</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 78%"></div>
-                            </div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-header">
-                                <span>Post Impressions</span>
-                                <span class="stat-value">5,678</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 92%"></div>
-                            </div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-header">
-                                <span>Engagement Rate</span>
-                                <span class="stat-value">12.4%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 62%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Floating Chat Widget -->
-        <div class="chat-widget">
-            <div class="chat-header">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <div>
-                    <div class="chat-title">React Devs Raipur</div>
-                    <div class="chat-subtitle">8 members online</div>
-                </div>
-            </div>
-            <div class="chat-messages">
-                <div class="chat-message">
-                    <img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?w=100" alt="Avatar" class="chat-avatar">
-                    <div>
-                        <div class="message-header">
-                            <span class="message-author">Alex Kumar</span>
-                            <span class="message-time">2m ago</span>
-                        </div>
-                        <div class="message-text">Has anyone tried the new React 19 features?</div>
-                    </div>
-                </div>
-                <div class="chat-message">
-                    <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" alt="Avatar" class="chat-avatar">
-                    <div>
-                        <div class="message-header">
-                            <span class="message-author">Maya Patel</span>
-                            <span class="message-time">1m ago</span>
-                        </div>
-                        <div class="message-text">Yes! The new compiler is amazing 🚀</div>
-                    </div>
-                </div>
-                <div class="chat-message">
-                    <img src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=100" alt="Avatar" class="chat-avatar">
-                    <div>
-                        <div class="message-header">
-                            <span class="message-author">You</span>
-                            <span class="message-time">Just now</span>
-                        </div>
-                        <div class="message-text">I wrote a blog post about it yesterday</div>
-                    </div>
-                </div>
-            </div>
-            <div class="chat-input-container">
-                <input type="text" placeholder="Type a message..." class="chat-input">
-                <button class="chat-send-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,62 @@
 // ============================================
+// AUTHENTICATION CHECK
+// ============================================
+
+// Check authentication on page load
+window.addEventListener('DOMContentLoaded', () => {
+    // For demo purposes, allow access without authentication
+    // Comment out these lines to require login
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    
+    if (token && user) {
+        loadUserData();
+    } else {
+        // Allow demo access without login
+        render();
+    }
+});
+
+function loadUserData() {
+    const user = localStorage.getItem('user');
+    
+    if (!user) {
+        render();
+        return;
+    }
+    
+    // Load user data into AppState
+    try {
+        const userData = JSON.parse(user);
+        if (userData.accountType === 'professional') {
+            AppState.professional.name = userData.name;
+            AppState.professional.email = userData.email;
+            AppState.professional.photo = userData.photo;
+            AppState.professional.banner = userData.banner;
+            AppState.currentPage = 'dashboard';
+            AppState.profileMode = 'professional';
+        } else {
+            AppState.market.name = userData.name;
+            AppState.market.email = userData.email;
+            AppState.market.photo = userData.photo;
+            AppState.market.banner = userData.banner;
+            AppState.currentPage = 'marketplace';
+            AppState.profileMode = 'market';
+        }
+        render();
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        render();
+    }
+}
+
+window.logout = function() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+};
+
+// ============================================
 // STATE MANAGEMENT
 // ============================================
 const AppState = {
