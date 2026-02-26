@@ -177,6 +177,79 @@ const mockJobs = [
     { id: 'j4', title: 'Data Entry Operator', company: 'Tech Solutions Pvt Ltd', companyLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100', location: 'Work from Home', salary: '₹12,000-15,000/month', type: 'Part-time', description: 'Work from home opportunity. Fast typing speed required. Flexible hours.', postedTime: '1w ago', tags: ['Remote', 'Data Entry'], applicants: 120 }
 ];
 
+// Filter state for Gigs page
+const gigsFilterState = {
+    categories: [
+        {
+            id: 'retail',
+            name: 'Retail & Sales',
+            items: ['Sales Associate', 'Cashier', 'Stock Clerk', 'Visual Merchandiser', 'Retail Worker', 'Store Supervisor'],
+            expanded: true
+        },
+        {
+            id: 'restaurant',
+            name: 'Restaurant & Hospitality',
+            items: ['Server', 'Bartender', 'Barista'],
+            expanded: true,
+            extraText: 'Busser, Host/Hostess, Food Runner, Banquet Server, Cafe Manager, etc.'
+        },
+        {
+            id: 'delivery',
+            name: 'Delivery & Logistics',
+            items: ['Delivery Driver (Bike/Car)', 'Warehouse Associate', 'Forklift Operator', 'Courier', 'Logistics Coordinator', 'Fleet Manager', 'Package Handler'],
+            expanded: false
+        },
+        {
+            id: 'general',
+            name: 'General Service & Support',
+            items: ['Customer Service Representative', 'Administrative Assistant', 'Janitor / Custodian', 'Maintenance Technician', 'Security Guard', 'Data Entry Clerk', 'Receptionist'],
+            expanded: false
+        },
+        {
+            id: 'food',
+            name: 'Food Service Production',
+            items: ['Line Cook', 'Prep Cook', 'Baker', 'Kitchen Helper', 'Food Assembler (Packaging)', 'Butcher', 'Pastry Chef'],
+            expanded: false
+        }
+    ],
+    selectedItems: [],
+    minSalary: 10,
+    maxSalary: 50,
+    location: ''
+};
+
+window.toggleCategory = function(categoryId) {
+    const category = gigsFilterState.categories.find(c => c.id === categoryId);
+    if (category) {
+        category.expanded = !category.expanded;
+        render();
+    }
+};
+
+window.toggleFilterItem = function(item) {
+    const index = gigsFilterState.selectedItems.indexOf(item);
+    if (index > -1) {
+        gigsFilterState.selectedItems.splice(index, 1);
+    } else {
+        gigsFilterState.selectedItems.push(item);
+    }
+    render();
+};
+
+window.updateMinSalary = function(value) {
+    gigsFilterState.minSalary = parseInt(value);
+    render();
+};
+
+window.updateMaxSalary = function(value) {
+    gigsFilterState.maxSalary = parseInt(value);
+    render();
+};
+
+window.updateLocation = function(value) {
+    gigsFilterState.location = value;
+};
+
 // ============================================
 // POST ACTIONS
 // ============================================
@@ -783,6 +856,55 @@ function renderGigs() {
                     <aside class="col-span-3">
                         <div class="bg-gradient-to-br from-purple-100/60 via-pink-50/60 to-blue-50/60 backdrop-blur-sm rounded-2xl p-6 sticky top-24 shadow-sm border border-white/40">
                             <h2 class="text-xl font-semibold text-gray-800 mb-6">Filter</h2>
+
+                            <!-- Category Section -->
+                            <div class="mb-6">
+                                <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Category</h3>
+                                <div class="space-y-2">
+                                    ${gigsFilterState.categories.map(category => `
+                                        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-white/40">
+                                            <button
+                                                onclick="toggleCategory('${category.id}')"
+                                                class="w-full flex items-center justify-between text-sm font-medium text-gray-800 hover:text-purple-600 transition-colors"
+                                            >
+                                                <span>${category.name}</span>
+                                                ${category.expanded ? `
+                                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <polyline points="18 15 12 9 6 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                    </svg>
+                                                ` : `
+                                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                                    </svg>
+                                                `}
+                                            </button>
+
+                                            ${category.expanded ? `
+                                                <div class="space-y-2 mt-3 pt-3 border-t border-gray-200">
+                                                    ${category.items.map(item => `
+                                                        <label class="flex items-start gap-2.5 text-xs text-gray-700 cursor-pointer hover:text-purple-600 transition-colors group">
+                                                            <input
+                                                                type="checkbox"
+                                                                ${gigsFilterState.selectedItems.includes(item) ? 'checked' : ''}
+                                                                onchange="toggleFilterItem('${item}')"
+                                                                class="mt-0.5 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 focus:ring-2 cursor-pointer"
+                                                            />
+                                                            <span class="leading-tight">${item}</span>
+                                                        </label>
+                                                    `).join('')}
+                                                    ${category.extraText ? `
+                                                        <p class="text-xs text-gray-500 italic mt-3 pl-6.5 leading-relaxed">
+                                                            ${category.extraText}
+                                                        </p>
+                                                    ` : ''}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Location Section -->
                             <div class="mb-6">
                                 <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Location</h3>
                                 <div class="relative">
@@ -790,7 +912,62 @@ function renderGigs() {
                                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                         <circle cx="12" cy="10" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                     </svg>
-                                    <input type="text" placeholder="Enter location" class="w-full pl-10 pr-4 py-2.5 bg-white/90 border border-white/50 rounded-xl text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-200 transition-all backdrop-blur-sm">
+                                    <input
+                                        type="text"
+                                        placeholder="Enter location"
+                                        value="${gigsFilterState.location}"
+                                        oninput="updateLocation(this.value)"
+                                        class="w-full pl-10 pr-4 py-2.5 bg-white/90 border border-white/50 rounded-xl text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-200 transition-all backdrop-blur-sm"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Salary Expectation Section -->
+                            <div>
+                                <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Salary Expectation</h3>
+                                <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-white/40">
+                                    <div class="space-y-4">
+                                        <!-- Min Slider -->
+                                        <div>
+                                            <div class="flex items-center justify-between mb-2">
+                                                <label class="text-xs font-medium text-gray-600">Min</label>
+                                                <span class="text-xs font-semibold text-purple-600">₹${gigsFilterState.minSalary}k</span>
+                                            </div>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value="${gigsFilterState.minSalary}"
+                                                oninput="updateMinSalary(this.value)"
+                                                class="w-full h-2 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer"
+                                                style="accent-color: #9333ea;"
+                                            />
+                                        </div>
+
+                                        <!-- Max Slider -->
+                                        <div>
+                                            <div class="flex items-center justify-between mb-2">
+                                                <label class="text-xs font-medium text-gray-600">Max</label>
+                                                <span class="text-xs font-semibold text-purple-600">₹${gigsFilterState.maxSalary}k</span>
+                                            </div>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value="${gigsFilterState.maxSalary}"
+                                                oninput="updateMaxSalary(this.value)"
+                                                class="w-full h-2 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer"
+                                                style="accent-color: #9333ea;"
+                                            />
+                                        </div>
+
+                                        <!-- Custom Input -->
+                                        <input
+                                            type="text"
+                                            placeholder="Custom"
+                                            class="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-200 transition-all"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
